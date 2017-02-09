@@ -23,12 +23,12 @@ class UsersTableSeeder extends Seeder
         $admin->role()->associate($adminrole);
         $admin->save();
 
-        $user = User::firstOrNew(['username' => 'user']);
+        /*$user = User::firstOrNew(['username' => 'user']);
         $user->displayname = 'User';
         $user->email = 'user@pam.ru';
         $user->password = bcrypt(config('seeding.userpasswords.user'));
         $userrole = Role::where('name','=','Сотрудник')->first();
         $user->role()->associate($userrole);
-        $user->save();
+        $user->save();*/
     }
 }
