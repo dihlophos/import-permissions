@@ -19,18 +19,13 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/home',
-        ['as' => 'home',
-        'uses' => 'HomeController@index']);
+    Route::get('home','HomeController@index')->name('home');
 
     Route::group(
         ['middleware' => 'can:access-lists',
         'prefix' => 'lists'],
         function () {
-            Route::get('/',
-                ['as' => 'lists-index',
-                'uses' => function() { return view('lists/lists'); }]);
-
+            Route::get('/', function() { return view('lists/lists');})->name('lists-index');
             Route::resource('/transport', 'TransportController', ['except' => [
                 'create', 'show', 'edit'
             ]]);
@@ -55,7 +50,3 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');

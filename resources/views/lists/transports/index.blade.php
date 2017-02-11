@@ -5,10 +5,10 @@
     @include('common.errors')
     @include('common.flash')
 
-    <form action="/lists/purpose" class="form-inline text-right" id="PurposeAddForm" method="POST" accept-charset="utf-8">
+    <form action="/lists/transport" class="form-inline text-right" id="TransportAddForm" method="POST" accept-charset="utf-8">
         {{ csrf_field() }}
         <div class="form-group required">
-            <input name="name" id="purpose-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:800px">
+            <input name="name" id="transport-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:800px">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">
@@ -17,14 +17,14 @@
         </div>
     </form>
     <br/>
-  @if (count($purposes) > 0)
+  @if (count($transports) > 0)
     <div class="panel panel-default">
       <div class="panel-heading">
         Транспорт
       </div>
 
       <div class="panel-body">
-        {{$purposes->links()}}
+        {{$transports->links()}}
         <table class="table table-striped task-table">
 
           <thead>
@@ -33,14 +33,14 @@
           </thead>
 
           <tbody>
-            @foreach ($purposes as $purpose)
+            @foreach ($transports as $transport)
               <tr>
                 <td class="table-text">
-                    <form class="form-inline" action="/lists/purpose/{{ $purpose->id }}" method="POST">
+                    <form class="form-inline" action="/lists/transport/{{ $transport->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="form-group required">
-                            <input name="name" class="form-control" value="{{ $purpose->name }}" maxlength="255" type="text" style="width:800px">
+                            <input name="name" class="form-control" value="{{ $transport->name }}" maxlength="255" type="text" style="width:800px">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
@@ -50,7 +50,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="/lists/purpose/{{ $purpose->id }}" method="POST">
+                    <form action="/lists/transport/{{ $transport->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 
@@ -64,7 +64,7 @@
             @endforeach
           </tbody>
         </table>
-        {{$purposes->links()}}
+        {{$transports->links()}}
       </div>
     </div>
    @endif
