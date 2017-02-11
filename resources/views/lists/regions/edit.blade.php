@@ -57,6 +57,7 @@
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group required">
+                        <input name="region_id" value="{{ $district->region_id }}" type="hidden">
                         <input name="name" class="form-control" value="{{ $district->name }}" maxlength="255" type="text" style="width:800px">
                     </div>
                     <div class="form-group">
