@@ -39,7 +39,7 @@
           <tbody>
             @foreach ($organizations as $organization)
               <tr>
-                <td class="table-text">
+                <td class="table-text" colspan="2">
                     <form class="form-inline" action="/lists/organization/{{ $organization->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
