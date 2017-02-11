@@ -8,7 +8,10 @@
     <form action="/lists/storage" class="form-inline text-right" id="StorageAddForm" method="POST" accept-charset="utf-8">
         {{ csrf_field() }}
         <div class="form-group required">
-            <input name="name" id="storage-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:800px">
+            <input name="name" id="storage-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:250px">
+        </div>
+        <div class="form-group required">
+            <input name="address" id="storage-address" class="form-control" placeholder="Адрес..." maxlength="255" type="text" style="width:550px">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">
@@ -40,7 +43,10 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="form-group required">
-                            <input name="name" class="form-control" value="{{ $storage->name }}" maxlength="255" type="text" style="width:800px">
+                            <input name="name" class="form-control" value="{{ $storage->name }}" maxlength="255" type="text" style="width:250px">
+                        </div>
+                        <div class="form-group required">
+                            <input name="address" class="form-control" value="{{ $storage->address }}" maxlength="255" type="text" style="width:550px">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
