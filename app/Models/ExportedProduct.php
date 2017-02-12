@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
         Количество - count
         Производитель - manufacturer
 */
-class ExportedProducts extends Model
+class ExportedProduct extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -32,5 +32,9 @@ class ExportedProducts extends Model
     public function product_type()
     {
        return $this->belongsTo(ProductType::class);
+    }
+
+    public function processed_products() {
+        return $this->hasMany(ProcessedProduct::class);
     }
 }
