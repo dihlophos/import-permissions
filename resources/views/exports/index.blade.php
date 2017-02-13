@@ -25,10 +25,10 @@
               @foreach ($exports as $export)
                 <tr>
                     <td class="table-text">
-                        {{$export->id}}
+                        <a href="{{route('export.edit', $export->id)}}" class="btn btn-info" role="button">{{$export->id}}</a>
                     </td>
                     <td class="table-text">
-                        от <u>{{empty($export->rermission_date)?str_repeat('&nbsp;',20):$export->rermission_date}}</u>
+                        от <u>{{empty($export->permission_date)?str_repeat('&nbsp;',20):$export->permission_date}}</u>
                         № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->permission_num}}</u>
                     </td>
                     <td class="table-text">
@@ -39,7 +39,7 @@
                         <form action="{{route('export.destroy', $export->id)}}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-primary">
+                            <button class="btn btn-info">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 Удалить
                             </button>

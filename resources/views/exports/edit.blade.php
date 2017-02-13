@@ -10,8 +10,9 @@
     @include('common.errors')
     @include('common.flash')
 
-<form action="{{route('export.store')}}" class="well" id="ExportAddForm" method="post" accept-charset="utf-8" class="form-horizontal">
+<form action="{{route('export.update', $export->id)}}" class="well" id="ExportEditForm" method="post" accept-charset="utf-8" class="form-horizontal">
     {{ csrf_field() }}
+    {{ method_field('PUT') }}
     <fieldset>
 		<legend>Вывоз</legend>
 		<div class="form-group required">
@@ -19,7 +20,7 @@
             <select name="organization_id" id="organization" class="form-control">
                 <option value=""></option>
                 @foreach ($organizations as $id => $org)
-                    <option value="{{$id}}">{{$org}}</option>
+                    <option value="{{$id}}" {{$export->organization_id==$id?'selected':''}}>{{$org}}</option>
                 @endforeach
             </select>
         </div>
@@ -28,28 +29,38 @@
             <select name="storage_id" id="storage" class="form-control" >
                 <option value=""></option>
                 @foreach ($storages as $id => $storage)
-                    <option value="{{$id}}">{{$storage}}</option>
+                    <option value="{{$id}}" {{$export->storage_id==$id?'selected':''}}>{{$storage}}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group required">
             <label class="col-sm-2" for="permission_date">Разрешение от</label>
             <label class="col-sm-10" for="permission_num">№</label>
-            <div class="col-sm-2"><input type="date" name="permission_date" class="form-control" value={{date("Y-m-d")}}></div>
-            <div class="col-sm-10" style="margin-bottom:15px;"><input type="text" name="permission_num" class="form-control" placeholder="№" style="width:300px"></div>
+            <div class="col-sm-2">
+                <input type="date" name="permission_date" class="form-control" value="{{$export->permission_date}}">
+            </div>
+            <div class="col-sm-10" style="margin-bottom:15px;">
+                <input type="text" name="permission_num" value="{{$export->permission_num}}"
+                       class="form-control" placeholder="№" style="width:300px">
+             </div>
         </div>
         <div class="form-group required">
             <label class="col-sm-2" for="request_date">На заявку от</label>
             <label class="col-sm-10" for="request_num">№</label>
-            <div class="col-sm-2"><input type="date" name="request_date" class="form-control" value={{date("Y-m-d")}}></div>
-            <div class="col-sm-10" style="margin-bottom:15px;"><input type="text" name="request_num" class="form-control" placeholder="№" style="width:300px"></div>
+            <div class="col-sm-2">
+                <input type="date" name="request_date" class="form-control" value="{{$export->request_date}}">
+            </div>
+            <div class="col-sm-10" style="margin-bottom:15px;">
+                <input type="text" name="request_num" value="{{$export->request_num}}"
+                       class="form-control" placeholder="№" style="width:300px">
+            </div>
         </div>
         <div class="form-group required">
             <label for="purpose">Цель вывоза</label>
             <select name="purpose_id" id="purpose" class="form-control" >
                 <option value=""></option>
                 @foreach ($purposes as $id => $purpose)
-                    <option value="{{$id}}">{{$purpose}}</option>
+                    <option value="{{$id}}" {{$export->purpose_id==$id?'selected':''}}>{{$purpose}}</option>
                 @endforeach
             </select>
         </div>
@@ -58,7 +69,7 @@
             <select name="district_id" id="district" class="form-control" >
                 <option value=""></option>
                 @foreach ($districts as $id => $district)
-                    <option value="{{$id}}">{{$district}}</option>
+                    <option value="{{$id}}" {{$export->district_id==$id?'selected':''}}>{{$district}}</option>
                 @endforeach
             </select>
         </div>
@@ -67,7 +78,7 @@
             <select name="transport_id" id="transport" class="form-control" >
                 <option value=""></option>
                 @foreach ($transports as $id => $transport)
-                    <option value="{{$id}}">{{$transport}}</option>
+                    <option value="{{$id}}" {{$export->transport_id==$id?'selected':''}}>{{$transport}}</option>
                 @endforeach
             </select>
         </div>
@@ -78,13 +89,13 @@
             <select name="region_id" id="region" class="form-control" >
                 <option value=""></option>
                 @foreach ($regions as $id => $region)
-                    <option value="{{$id}}">{{$region}}</option>
+                    <option value="{{$id}}" {{$export->region_id==$id?'selected':''}}>{{$region}}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group required">
             <label for="address">Адрес</label>
-            <input name="address" id="address" class="form-control" type="text" placeholder="адрес">
+            <input name="address" id="address" class="form-control" value="{{$export->address}}" type="text" placeholder="адрес">
         </div>
         <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">

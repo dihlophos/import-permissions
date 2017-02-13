@@ -80,7 +80,17 @@ class ExportController extends Controller
      */
     public function edit(Export $export)
     {
-        //
+        $storages = Storage::orderBy('name')->pluck('name', 'id');
+        $organizations = Organization::orderBy('name')->pluck('name', 'id');
+        $purposes = Purpose::orderBy('name')->pluck('name', 'id');
+        $regions = Region::orderBy('name')->pluck('name', 'id');
+        $districts = District::orderBy('name')->pluck('name', 'id');
+        $transports = Transport::orderBy('name')->pluck('name', 'id');
+        return view(
+                    'exports.edit',
+                    compact(['export', 'storages', 'organizations', 'purposes',
+                             'regions', 'districts', 'transports'])
+                );
     }
 
     /**
@@ -90,9 +100,11 @@ class ExportController extends Controller
      * @param  \App\Models\Export  $export
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Export $export)
+    public function update(StoreExport $request, Export $export)
     {
-        //
+        $export->fill($request->all())->save();
+        $request->session()->flash('alert-success', 'Запись успешно обновлена!');
+        return redirect()->route('export.index');
     }
 
     /**
@@ -101,8 +113,10 @@ class ExportController extends Controller
      * @param  \App\Models\Export  $export
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Export $export)
+    public function destroy(Request $request, Export $export)
     {
-        //
+        $export->delete();
+        $request->session()->flash('alert-success', 'Запись успешно удалена!');
+        return redirect()->route('export.index');
     }
 }
