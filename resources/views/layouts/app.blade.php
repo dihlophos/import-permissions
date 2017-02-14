@@ -37,7 +37,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url::route('home') }}">
+                    <a class="navbar-brand" href="{{ route('home') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -47,8 +47,11 @@
                     <ul class="nav navbar-nav">
                         <li>
                             @can('access-lists')
-                                <a href="{{ url::route('lists-index') }}">Справочники</a>
+                                <a href="{{route('lists-index') }}">Справочники</a>
                             @endcan
+                        </li>
+                        <li>
+                            <a href="{{ route('export.index') }}">Вывоз</a>
                         </li>
                     </ul>
 

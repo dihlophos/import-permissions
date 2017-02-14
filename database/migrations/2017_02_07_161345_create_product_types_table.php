@@ -19,7 +19,7 @@ class CreateProductTypesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('purposes')->insert([
+        DB::table('product_types')->insert([
             ['name' => 'Мясное сырье и полуфабрикаты'],
             ['name' => 'Готовые мясные продукты'],
             ['name' => 'Рыба, рыбопродукты, морепродукты сырые'],

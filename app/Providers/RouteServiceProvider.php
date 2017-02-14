@@ -32,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('district', App\Models\District::class);
         Route::model('organization', App\Models\Organization::class);
         Route::model('export', App\Models\Export::class);
+        Route::model('exported_product', App\Models\ExportedProduct::class);
         parent::boot();
     }
 

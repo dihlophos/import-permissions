@@ -9,6 +9,7 @@ use App\Models\Purpose;
 use App\Models\Region;
 use App\Models\District;
 use App\Models\Transport;
+use App\Models\ProductType;
 use App\Http\Requests\StoreExport;
 use Illuminate\Http\Request;
 
@@ -86,10 +87,13 @@ class ExportController extends Controller
         $regions = Region::orderBy('name')->pluck('name', 'id');
         $districts = District::orderBy('name')->pluck('name', 'id');
         $transports = Transport::orderBy('name')->pluck('name', 'id');
+        $product_types = ProductType::orderBy('name')->pluck('name', 'id');
+        $exported_products = $export->exported_products()->orderBy('id')->paginate(50);;
         return view(
                     'exports.edit',
                     compact(['export', 'storages', 'organizations', 'purposes',
-                             'regions', 'districts', 'transports'])
+                             'regions', 'districts', 'transports', 'product_types',
+                             'exported_products'])
                 );
     }
 
@@ -115,6 +119,7 @@ class ExportController extends Controller
      */
     public function destroy(Request $request, Export $export)
     {
+        $export->exported_products()->delete();
         $export->delete();
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
         return redirect()->route('export.index');

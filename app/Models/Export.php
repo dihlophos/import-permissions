@@ -32,6 +32,11 @@ class Export extends Model
                            'purpose_id',     'region_id',       'district_id',
                            'address',        'transport_id'];
 
+    public function exported_products()
+    {
+       return $this->hasMany(ExportedProduct::class);
+    }
+
     public function storage()
     {
         return $this->belongsTo(Storage::class);

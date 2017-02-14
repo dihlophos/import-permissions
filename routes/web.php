@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
         'show'
     ]]);
 
+    Route::resource('/exported_product', 'ExportedProductController', ['except' => [
+        'create', 'show', 'edit'
+    ]]);
+
     Route::group(
         ['middleware' => 'can:access-lists',
         'prefix' => 'lists'],
