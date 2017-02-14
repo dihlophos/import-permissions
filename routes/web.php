@@ -29,6 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
         'create', 'show', 'edit'
     ]]);
 
+    Route::resource('/processed_product', 'ProcessedProductController', ['except' => [
+        'create', 'show', 'edit'
+    ]]);
+
     Route::group(
         ['middleware' => 'can:access-lists',
         'prefix' => 'lists'],
