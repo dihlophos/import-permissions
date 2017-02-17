@@ -88,12 +88,27 @@ class ExportController extends Controller
         $districts = District::orderBy('name')->pluck('name', 'id');
         $transports = Transport::orderBy('name')->pluck('name', 'id');
         $product_types = ProductType::orderBy('name')->pluck('name', 'id');
-        $exported_products = $export->exported_products()->orderBy('id')->paginate(50);;
+        $exported_products = $export->exported_products()->orderBy('id')->paginate(50);
         return view(
                     'exports.edit',
                     compact(['export', 'storages', 'organizations', 'purposes',
                              'regions', 'districts', 'transports', 'product_types',
                              'exported_products'])
+                );
+    }
+
+    /**
+     *
+     * @param  \App\Models\Export  $export
+     */
+    public function process(Export $export)
+    {
+        $exported_products = $export->exported_products()->orderBy('id')->paginate(50);
+        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport');
+        $exported_products->load('processed_products', 'product_type');
+        return view(
+                    'exports.process',
+                    compact(['export', 'exported_products'])
                 );
     }
 
