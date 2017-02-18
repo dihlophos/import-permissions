@@ -56,17 +56,20 @@
 
     <div class="panel-body">
         {{$exported_products->links()}}
-        <table class="table table-striped task-table">
+        <table class="table table-condensed table-hover">
             <thead>
+                <th></th>
                 <th>Груз</th>
                 <th>Ед изм</th>
                 <th>Количество</th>
                 <th>Производитель</th>
-                <th>Удалить</th>
             </thead>
             <tbody>
             @foreach ($exported_products as $product)
-                <tr>
+                <tr class="text-primary clickable" data-toggle="collapse" data-target=".processed_{{$product->id}}" role="button" aria-expanded="true">
+                    <td>
+                        <i class="fa fa-caret-square-o-up" aria-hidden="true"></i>
+                    </td>
                     <td class="table-text">
                         {{$product->product_type->name}}
                     </td>
@@ -79,9 +82,79 @@
                     <td class="table-text">
                         {{$product->manufacturer}}
                     </td>
-                    <td>
+                </tr>
+                <tr class="processed_{{$product->id}} collapse in">
+                    <td colspan="5">
+                        <form action="{{route('processed_product.store')}}" class="form-inline"
+                              id="ProcessedProductAddForm{{$product->id}}" method="post" accept-charset="utf-8" class="form-horizontal">
+                            {{ csrf_field() }}
+                            <input name="exported_product_id" type="hidden" value="{{$product->id}}">
+                            <div class="form-group">
+                                <label class="sr-only" for="processed_date">Груз</label>
+                                <input name="date" id="processed_date" type="date" class="form-control" placeholder="дата">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="processed_measure">Ед изм</label>
+                                <select name="measure" id="processed_measure" class="form-control" placeholder="ед изм">
+                                    <option value="тонна">тонна</option>
+                                    <option value="тыс.шт.">тыс.шт.</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="processed_count">Количество</label>
+                                <input name="count" class="form-control" id="processed_count" type="number" placeholder="количество">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Добавить
+                                </button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
+                @foreach ($product->processed_products as $processed)
+                <tr class="processed_{{$product->id}} collapse in">
+                    <td colspan="5">
+                        <div style="float: left;">
+                            <form action="{{route('processed_product.update', $processed->id)}}" class="form-inline"
+                                  id="ProcessedProductAddForm{{$product->id}}" method="post" accept-charset="utf-8" class="form-horizontal">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+                                <input name="exported_product_id" type="hidden" value="{{$processed->exported_product_id}}">
+                                <div class="form-group">
+                                    <label class="sr-only" for="processed_date">Груз</label>
+                                    <input name="date" value="{{$processed->date}}" id="processed_date" type="date" class="form-control" placeholder="дата">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="processed_measure">Ед изм</label>
+                                    <select name="measure" id="processed_measure" class="form-control" placeholder="ед изм">
+                                        <option value="тонна" {{$processed->measure=='тонна'?'selected':''}}>тонна</option>
+                                        <option value="тыс.шт." {{$processed->measure=='тыс.шт.'?'selected':''}}>тыс.шт.</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="processed_count">Количество</label>
+                                    <input name="count" value="{{$processed->count}}" class="form-control" id="processed_count" type="number" placeholder="количество">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="float: left; padding-left: 5px;">
+                            <form action="{{route('processed_product.destroy', $processed->id)}}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-primary">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             @endforeach
             </tbody>
         </table>
@@ -89,5 +162,21 @@
   </div>
 </div>
 @endif
+@endsection
 
+@section('scripts')
+<script type="text/javascript">
+$(function () {
+    $(document).on('click', 'tr.clickable', function(e){
+        var $this = $(this);
+    	if(!$this.hasClass('collapsed')) {
+            $this.addClass('collapsed');
+    		$this.find('i').removeClass('fa-caret-square-o-up').addClass('fa-caret-square-o-down');
+    	} else {
+            $this.removeClass('collapsed');
+    		$this.find('i').removeClass('fa-caret-square-o-down').addClass('fa-caret-square-o-up');
+    	}
+    })
+});
+</script>
 @endsection

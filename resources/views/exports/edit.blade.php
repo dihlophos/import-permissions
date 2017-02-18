@@ -179,7 +179,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="measure">Ед изм</label>
-                                <select name="measure" id="measure" class="form-control" placeholder="груз">
+                                <select name="measure" id="measure" class="form-control" placeholder="ед изм">
                                     <option value="тонна" {{$product->measure=='тонна'?'selected':''}}>тонна</option>
                                     <option value="тыс.шт." {{$product->measure=='тыс.шт.'?'selected':''}}>тыс.шт.</option>
                                 </select>

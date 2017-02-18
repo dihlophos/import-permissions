@@ -38,7 +38,7 @@ class ProcessedProductController extends Controller
     {
         $processedProduct = ProcessedProduct::create($request->all());
         $request->session()->flash('alert-success', 'Запись успешно добавлена!');
-        return redirect()->route('export.edit', $processedProduct->exported_product_id );
+        return redirect()->route('export.process', $processedProduct->exported_product->export_id );
     }
 
     /**
@@ -74,7 +74,7 @@ class ProcessedProductController extends Controller
     {
         $processedProduct->fill($request->all())->save();
         $request->session()->flash('alert-success', 'Запись успешно обновлена!');
-        return redirect()->route('export.edit', $processedProduct->exported_product_id );
+        return redirect()->route('export.process', $processedProduct->exported_product->export_id);
     }
 
     /**
@@ -85,8 +85,9 @@ class ProcessedProductController extends Controller
      */
     public function destroy(Request $request, ProcessedProduct $processedProduct)
     {
+        $export_id = $processedProduct->exported_product->export_id;
         $processedProduct->delete();
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
-        return redirect()->route('export.edit', $processedProduct->export_id );
+        return redirect()->route('export.process', $export_id );
     }
 }

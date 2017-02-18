@@ -26,6 +26,7 @@
                 <tr>
                     <td class="table-text">
                         <a href="{{route('export.edit', $export->id)}}" class="btn btn-info" role="button">{{$export->id}}</a>
+                        <a href="{{route('export.process', $export->id)}}" class="btn btn-info" role="button">Выполнение</a>
                     </td>
                     <td class="table-text">
                         от <u>{{empty($export->permission_date)?str_repeat('&nbsp;',20):$export->permission_date}}</u>
