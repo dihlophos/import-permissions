@@ -39,9 +39,13 @@ class CreateForeignConstraints extends Migration
     {
         Schema::table('exported_products', function (Blueprint $table) {
             $table->dropForeign(['export_id']);
+            $table->integer('export_id', false, false)->change();
+            $table->index(['export_id']);
         });
         Schema::table('processed_products', function (Blueprint $table) {
             $table->dropForeign(['exported_product_id']);
+            $table->integer('exported_product_id', false, false)->change();
+            $table->index(['exported_product_id']);
         });
     }
 }
