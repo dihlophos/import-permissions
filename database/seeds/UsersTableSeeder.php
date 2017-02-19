@@ -13,7 +13,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RolesTableSeeder::class);
 
         $admin = User::firstOrNew(['username' => 'admin']);
         $admin->displayname = 'Admin';
