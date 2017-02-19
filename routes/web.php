@@ -25,15 +25,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home','HomeController@index')->name('home');
 
-<<<<<<< HEAD
     Route::get('/export/{export}/process','ExportController@process')->name('export.process');
 
     Route::put('/export/{export}/permission_num','ExportController@setnum')->name('export.setnum');
 
     Route::get('/export/{export}/permission_doc','ExportController@permission_doc')->name('export.permission_doc');
-=======
+
     Route::get('/export/{export}/process','ExportController@process')->name('export.process')->middleware('can:process,export');
->>>>>>> 53a9831e0927a33078f2c17b459453f932809767
 
     Route::resource('/export', 'ExportController', ['except' => [
         'show'
