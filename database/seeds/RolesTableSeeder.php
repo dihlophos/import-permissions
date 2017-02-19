@@ -16,8 +16,16 @@ class RolesTableSeeder extends Seeder
         	['name' => 'Администратор']
         );
 
-        /*Role::updateOrCreate(
-        	['name' => 'Сотрудник']
-        );*/
+        Role::updateOrCreate(
+        	['name' => 'Админастратор управления']
+        );
+
+        Role::updateOrCreate(
+            ['name' => 'Админастратор учреждения']
+        );
+
+        Role::updateOrCreate(
+            ['name' => 'Специалист учреждения']
+        );
     }
 }
