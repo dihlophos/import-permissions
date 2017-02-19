@@ -69,9 +69,12 @@ class ExportPolicy
             return true;
         }
 
-        if ($user->RoleName() === "Админастратор управления")
+        if ($user->RoleName() === "Специалист учреждения")
         {
-            return true;
+            if (!is_null($export->permission_num))
+            {
+                return true;
+            }
         }
 
         return false;
@@ -87,6 +90,11 @@ class ExportPolicy
     public function specifyNumber(User $user, Export $export)
     {
         if ($user->isAdmin()) {
+            return true;
+        }
+
+        if ($user->RoleName() === "Админастратор управления")
+        {
             return true;
         }
 
