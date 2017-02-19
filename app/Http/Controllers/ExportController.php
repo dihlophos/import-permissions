@@ -139,4 +139,20 @@ class ExportController extends Controller
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
         return redirect()->route('export.index');
     }
+
+    /**
+     * Return permission document.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function permission_doc(Export $export)
+    {
+        $exported_products = $export->exported_products()->orderBy('id')->get();
+        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport');
+        $exported_products->load('processed_products', 'product_type');
+        return view('exports.permission_doc', [
+            'export' => $export,
+            'exported_products' => $exported_products
+        ]);
+    }
 }
