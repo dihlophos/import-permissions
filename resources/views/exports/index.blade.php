@@ -5,7 +5,10 @@
     @include('common.errors')
     @include('common.flash')
 
-    <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
+    @can('create', Export::class)
+        <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
+    @endcan
+    
     @if (count($exports) > 0)
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -30,7 +33,7 @@
                             {{$export->id}}
                         </td>
                         <td class="table-text">
-                            @can('modify', $export)
+                            @can('update', $export)
                                 <a href="{{route('export.edit', $export->id)}}" class="btn btn-primary" role="button">Редактировать</a>
                             @endcan
                             @can('process', $export)
@@ -73,7 +76,7 @@
                             № <u>{{empty($export->request_num)?str_repeat('&nbsp;', 6):$export->request_num}}</u>
                         </td>
                         <td>
-                            @can('modify', $export)
+                            @can('update', $export)
                                 <form action="{{route('export.destroy', $export->id)}}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}

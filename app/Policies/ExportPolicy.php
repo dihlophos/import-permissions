@@ -53,6 +53,11 @@ class ExportPolicy
             return true;
         }
 
+        if (($user->RoleName() === "Админастратор управления") || ($user->RoleName() === "Админастратор учреждения"))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -109,7 +114,16 @@ class ExportPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        if (($user->RoleName() === "Админастратор управления") || ($user->RoleName() === "Админастратор учреждения"))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
