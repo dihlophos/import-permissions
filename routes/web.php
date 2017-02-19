@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home','HomeController@index')->name('home');
 
-    Route::get('/export/{export}/process','ExportController@process')->name('export.process');;
+    Route::get('/export/{export}/process','ExportController@process')->name('export.process')->middleware('can:process,export');
 
     Route::resource('/export', 'ExportController', ['except' => [
         'show'

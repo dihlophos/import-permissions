@@ -5,10 +5,10 @@
     @include('common.errors')
     @include('common.flash')
 
-    @can('create', Export::class)
+    @if(Gate::allows('modify-export',null))
         <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
-    @endcan
-    
+    @endif
+
     @if (count($exports) > 0)
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -46,13 +46,12 @@
                                 № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->permission_num}}</u>
                             </div>
                             <div style="float: left; padding-left:10px">
-                                @can('specifyNumber', $export)
+                                @can('specifyPermission', $export)
                                     <form action="{{route('export.update', $export->id)}}" id="ExportEditForm" method="post" accept-charset="utf-8" class="form-inline">
                                         {{ csrf_field() }}
                                         {{ method_field('PUT') }}
                                         <input type="hidden" name="organization_id" value="{{$export->organization_id}}">
                                         <input type="hidden" name="storage_id" value="{{$export->storage_id}}">
-                                        <input type="hidden" name="permission_date" value="{{$export->permission_date}}">
                                         <input type="hidden" name="request_date" value="{{$export->request_date}}">
                                         <input type="hidden" name="request_num" value="{{$export->request_num}}">
                                         <input type="hidden" name="purpose_id" value="{{$export->purpose_id}}">
@@ -60,6 +59,7 @@
                                         <input type="hidden" name="transport_id" value="{{$export->transport_id}}">
                                         <input type="hidden" name="region_id" value="{{$export->region_id}}">
                                         <input type="hidden" name="address" value="{{$export->address}}">
+                                        <input type="date" name="permission_date" class="form-control" value="{{$export->permission_date}}">
                                         <input type="text" name="permission_num" value="{{$export->permission_num}}"
                                                class="form-control" placeholder="№" style="width:100px">
                                         <div class="form-group">
