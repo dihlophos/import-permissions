@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Сводка</div>
 
                 <div class="panel-body">
-                     <p>Hi, {{ Auth::user()->displayname }}!</p>
-                     <p>Role: {{ Auth::user()->role->name }}</p>
-                     <p>Admin: {{ Auth::user()->isAdmin() }}</p>
+                     <p>Здравствуйте, {{ Auth::user()->displayname }}!</p>
+                     <p>Роль: {{ Auth::user()->role->name }}</p>
+                     <p>Права администратора: {{ Auth::user()->isAdmin()?'да':'нет' }}</p>
                 </div>
             </div>
         </div>
