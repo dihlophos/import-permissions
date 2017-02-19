@@ -7,8 +7,6 @@
 
     @if(Gate::allows('modify-export',null))
         <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
-    @endcan
-=======
     @endif
 
     @if (count($exports) > 0)
