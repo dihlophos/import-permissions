@@ -28,12 +28,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('specify-permission', function ($user, $organization) {
+        Gate::define('specify-export-permission', function ($user, $organization) {
             return $user->isAdmin() || ($user->roleName() === "Админастратор управления");
         });
 
         Gate::define('modify-export', function ($user, $organization) {
             return $user->isAdmin() || ($user->roleName() === "Админастратор управления") || ($user->roleName() === "Админастратор учреждения");
+        });
+
+        Gate::define('view-export', function ($user, $organization) {
+            return true;
+        });
+
+        Gate::define('process-export', function ($user, $organization) {
+            return $user->RoleName() === "Специалист учреждения";
         });
 
         Gate::define('access-lists', function ($user) {
