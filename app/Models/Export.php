@@ -66,4 +66,9 @@ class Export extends Model
     {
         return $this->belongsTo(Transport::class);
     }
+
+    public function permissionSpecified()
+    {
+        return !(is_null($this->permission_num) || is_null($this->permission_date));
+    }
 }

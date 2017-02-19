@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Gate;
 use App\Models\Export;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -19,25 +20,17 @@ class ExportPolicy
      */
     public function view(User $user, Export $export)
     {
-        if ($user->isAdmin()) 
-        {
-            return true;
-        }
-
-        if (($user->RoleName() === "Админастратор управления") || ($user->RoleName() === "Админастратор учреждения"))
-        {
-            return true;
-        }
+        if (Gate::denies('view-export', null)) { return false; }
 
         if ($user->RoleName() === "Специалист учреждения")
         {
-            if (!is_null($export->permission_num))
+            if (!$export->permissionSpecified())
             {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -49,24 +42,17 @@ class ExportPolicy
      */
     public function update(User $user, Export $export)
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        if ($user->RoleName() === "Админастратор управления")
-        {
-            return true;
-        }
+        if (Gate::denies('modify-export', null)) { return false; }
 
         if ($user->RoleName() === "Админастратор учреждения")
         {
-            if (is_null($export->permission_num) && is_null($export->permission_date))
+            if ($export->permissionSpecified())
             {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -78,19 +64,17 @@ class ExportPolicy
      */
     public function process(User $user, Export $export)
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
+        if (Gate::denies('process-export', null)) { return false; }
 
         if ($user->RoleName() === "Специалист учреждения")
         {
-            if (!is_null($export->permission_num))
+            if (!$export->permissionSpecified())
             {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -102,27 +86,8 @@ class ExportPolicy
      */
     public function specifyPermission(User $user, Export $export)
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
+        if (Gate::denies('specify-export-permission', null)) { return false; }
 
-        if ($user->RoleName() === "Админастратор управления")
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the export.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Export  $export
-     * @return mixed
-     */
-    public function delete(User $user, Export $export)
-    {
-        //
+        return true;
     }
 }
