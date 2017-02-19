@@ -32,9 +32,14 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function roleName()
+    {
+        return $this->role->name;
+    }
+
     public function isAdmin()
     {
-        return ($this->role->name === "Администратор");
+        return ($this->roleName() === "Администратор");
     }
 
     public function scopeByUserName($query, $username)
