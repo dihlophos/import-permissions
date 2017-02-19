@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Gate;
 
 class StoreExport extends FormRequest
 {
@@ -14,11 +13,7 @@ class StoreExport extends FormRequest
      */
     public function authorize()
     {
-        if (!is_null($this->permission_num) || !is_null($this->permission_date))
-        {
-            return $this->user()->can('specify-permission', null);
-        }
-        return $this->user()->can('modify-export', null);
+        return true;
     }
 
     /**

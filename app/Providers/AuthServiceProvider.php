@@ -28,6 +28,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('specify-permission', function ($user, $organization) {
+            return $user->isAdmin() || ($user->roleName() === "Админастратор управления");
+        });
+
+        Gate::define('modify-export', function ($user, $organization) {
+            return $user->isAdmin() || ($user->roleName() === "Админастратор управления") || ($user->roleName() === "Админастратор учреждения");
+        });
+
         Gate::define('access-lists', function ($user) {
             return $user->isAdmin();
         });

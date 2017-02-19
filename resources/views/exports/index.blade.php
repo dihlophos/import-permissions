@@ -5,9 +5,11 @@
     @include('common.errors')
     @include('common.flash')
 
-    @can('create', Export::class)
+    @if(Gate::allows('modify-export',null))
         <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
     @endcan
+=======
+    @endif
 
     @if (count($exports) > 0)
     <div class="panel panel-default">
@@ -46,7 +48,7 @@
                                 № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->permission_num}}</u>
                             </div>
                             <div style="float: left; padding-left:10px">
-                                @can('specifyNumber', $export)
+                                @can('specifyPermission', $export)
                                     <form action="{{route('export.update', $export->id)}}" id="ExportEditForm" method="post" accept-charset="utf-8" class="form-inline">
                                         {{ csrf_field() }}
                                         {{ method_field('PUT') }}

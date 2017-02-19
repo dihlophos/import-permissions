@@ -40,7 +40,7 @@ class ExportPolicy
         return false;
     }
 
-        /**
+    /**
      * Determine whether the user can update the export.
      *
      * @param  \App\User  $user
@@ -53,9 +53,17 @@ class ExportPolicy
             return true;
         }
 
-        if (($user->RoleName() === "Админастратор управления") || ($user->RoleName() === "Админастратор учреждения"))
+        if ($user->RoleName() === "Админастратор управления")
         {
             return true;
+        }
+
+        if ($user->RoleName() === "Админастратор учреждения")
+        {
+            if (is_null($export->permission_num) && is_null($export->permission_date))
+            {
+                return true;
+            }
         }
 
         return false;
@@ -92,33 +100,13 @@ class ExportPolicy
      * @param  \App\Export  $export
      * @return mixed
      */
-    public function specifyNumber(User $user, Export $export)
+    public function specifyPermission(User $user, Export $export)
     {
         if ($user->isAdmin()) {
             return true;
         }
 
         if ($user->RoleName() === "Админастратор управления")
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine whether the user can create exports.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        if (($user->RoleName() === "Админастратор управления") || ($user->RoleName() === "Админастратор учреждения"))
         {
             return true;
         }
