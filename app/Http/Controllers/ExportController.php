@@ -145,6 +145,19 @@ class ExportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function setnum(Request $request, Export $export)
+    {
+        $export->permission_num = $request->permission_num;
+        $export->save();
+        $request->session()->flash('alert-success', 'Номер разрешения назначен!');
+        return redirect()->route('export.index');
+    }
+
+    /**
+     * Return permission document.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function permission_doc(Export $export)
     {
         $exported_products = $export->exported_products()->orderBy('id')->get();
