@@ -148,6 +148,7 @@ class ExportController extends Controller
     public function setnum(Request $request, Export $export)
     {
         $export->permission_num = $request->permission_num;
+        $export->permission_date = $request->permission_date;
         $export->save();
         $request->session()->flash('alert-success', 'Номер разрешения назначен!');
         return redirect()->route('export.index');
