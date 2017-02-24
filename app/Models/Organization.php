@@ -12,4 +12,9 @@ class Organization extends Model
      * @var array
      */
     protected $fillable = ['name','tin'];
+
+    public function storages()
+	{
+		return $this->hasMany(Storage::class);
+	}
 }

@@ -21,11 +21,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('regions', 'Api\RegionController',  ['only' => [
     	'index', 'show'
-	]]);
+]]);
 
 Route::resource('regions.districts', 'Api\DistrictController',  ['only' => [
     	'index', 'show'
-	]]);
+]]);
+
+Route::resource('organizations', 'Api\OrganizationController',  ['only' => [
+    	'index', 'show'
+]]);
+
+Route::resource('organizations.storages', 'Api\StorageController',  ['only' => [
+    	'index', 'show'
+]]);
 
 Route::group(['middleware' => 'auth'], function () {
 

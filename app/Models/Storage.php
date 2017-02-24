@@ -12,4 +12,9 @@ class Storage extends Model
      * @var array
      */
     protected $fillable = ['name', 'address'];
+
+    public function organization()
+	{
+		return $this->belongsTo(Organization::class);
+	}
 }
