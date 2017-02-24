@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('process-export', function ($user, $organization) {
-            return $user->RoleName() === "instspec";
+            return $user->isAdmin() || ($user->RoleName() === "instspec");
         });
 
         Gate::define('access-lists', function ($user) {
