@@ -22,7 +22,7 @@ class ExportPolicy
     {
         if (Gate::denies('view-export', null)) { return false; }
 
-        if ($user->RoleName() === "Специалист учреждения")
+        if ($user->RoleName() === "instspec")
         {
             if (!$export->permissionSpecified())
             {
@@ -44,7 +44,7 @@ class ExportPolicy
     {
         if (Gate::denies('modify-export', null)) { return false; }
 
-        if ($user->RoleName() === "Админастратор учреждения")
+        if ($user->RoleName() === "instadmin")
         {
             if ($export->permissionSpecified())
             {
@@ -66,7 +66,7 @@ class ExportPolicy
     {
         if (Gate::denies('process-export', null)) { return false; }
 
-        if ($user->RoleName() === "Специалист учреждения")
+        if ($user->RoleName() === "instspec")
         {
             if (!$export->permissionSpecified())
             {
