@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Region;
+use App\Models\District;
 use App\Http\Requests\StoreInstitution;
 
 class InstitutionController extends Controller
@@ -64,9 +65,16 @@ class InstitutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Institution $institution)
     {
-        //
+        $institution->load('districts');
+        $regions = Region::orderBy('name')->pluck('name', 'id');
+        $districts = District::orderBy('name')->pluck('name', 'id');
+        return view('lists.institutions.edit', [
+            'institution' => $institution,
+            'regions' => $regions,
+            'districts' => $districts
+        ]);
     }
 
     /**

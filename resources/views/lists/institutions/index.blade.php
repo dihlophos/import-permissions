@@ -34,48 +34,52 @@
         <table class="table table-striped task-table">
 
             <thead>
+                <th>Код</th>
                 <th>Название</th>
                 <th>Удалить</th>
             </thead>
 
-          <tbody>
+            <tbody>
             @foreach ($institutions as $institution)
-              <tr>
-                <td class="table-text">
-                    <form class="form-inline" action="{{route('institution.update', $institution->id)}}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
-                        <div class="form-group required">
-                            <input name="name" class="form-control" value="{{ $institution->name }}" maxlength="255" type="text" style="width:500px">
-                        </div>
-                        <div class="form-group required">
-                            <select name="region_id" id="institution-region_id" class="form-control">
-                                @foreach ($regions as $id => $region)
-                                    <option value="{{$id}}" {{$institution->region_id == $id ? 'selected' : ''}}>{{$region}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить
-                            </button>
-                        </div>
-                    </form>
-                </td>
-                <td>
-                    <form action="{{route('institution.destroy', $institution->id)}}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
+                <tr>
+                    <td class="table-text">
+                        <a class="btn btn-primary" href="{{route('institution.edit', $institution->id)}}">{{$institution->id}}</a>
+                    </td>
+                    <td class="table-text">
+                        <form class="form-inline" action="{{route('institution.update', $institution->id)}}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+                            <div class="form-group required">
+                                <input name="name" class="form-control" value="{{ $institution->name }}" maxlength="255" type="text" style="width:400px">
+                            </div>
+                            <div class="form-group required">
+                                <select name="region_id" id="institution-region_id" class="form-control">
+                                    @foreach ($regions as $id => $region)
+                                        <option value="{{$id}}" {{$institution->region_id == $id ? 'selected' : ''}}>{{$region}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{route('institution.destroy', $institution->id)}}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
 
-                        <button class="btn btn-primary">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            Удалить
-                        </button>
-                    </form>
-                </td>
-              </tr>
+                            <button class="btn btn-primary">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                Удалить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
-          </tbody>
+            </tbody>
         </table>
         {{$institutions->links()}}
       </div>
