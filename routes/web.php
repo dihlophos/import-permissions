@@ -71,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('/organization', 'OrganizationController', ['except' => [
                 'create', 'show', 'edit'
             ]]);
+            Route::resource('/institution', 'InstitutionController', ['except' => [
+                'create', 'show', 'edit'
+            ]]);
         }
     );
 });
