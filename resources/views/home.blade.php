@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
                      <p>Здравствуйте, {{ Auth::user()->displayname }}!</p>
-                     <p>Роль: {{ Auth::user()->role->name }}</p>
+                     <p>Роль: {{ Auth::user()->RoleName() }}</p>
                      <p>Права администратора: {{ Auth::user()->isAdmin()?'да':'нет' }}</p>
                 </div>
             </div>
