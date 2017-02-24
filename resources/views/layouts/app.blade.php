@@ -50,9 +50,6 @@
                                 <a href="{{route('lists-index') }}">Справочники</a>
                             @endcan
                         </li>
-                        <li>
-                            <a href="{{ route('export.index') }}">Вывоз</a>
-                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

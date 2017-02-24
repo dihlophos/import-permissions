@@ -7,6 +7,7 @@ use App\Models\Storage;
 use App\Models\Organization;
 use App\Models\Purpose;
 use App\Models\Region;
+use App\Models\Institution;
 use App\Models\District;
 use App\Models\Transport;
 use App\Models\ProductType;
@@ -20,12 +21,14 @@ class ExportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $exports = Export::orderBy('id', 'desc')->paginate(50);
+        $instituition_id = $request->institution;
+        $exports = Export::byInstitution($instituition_id)->orderBy('id', 'desc')->paginate(50);
 
         return view('exports.index', [
             'exports' => $exports,
+            'institution_id' => $instituition_id,
         ]);
     }
 
@@ -34,8 +37,9 @@ class ExportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $institution_id = $request->institution;
         $storages = Storage::orderBy('name')->pluck('name', 'id');
         $organizations = Organization::orderBy('name')->pluck('name', 'id');
         $purposes = Purpose::orderBy('name')->pluck('name', 'id');
@@ -45,7 +49,7 @@ class ExportController extends Controller
         return view(
                     'exports.create',
                     compact(['storages', 'organizations', 'purposes',
-                             'regions', 'districts', 'transports'])
+                             'regions', 'districts', 'transports', 'institution_id'])
                 );
     }
 
@@ -93,7 +97,7 @@ class ExportController extends Controller
                     'exports.edit',
                     compact(['export', 'storages', 'organizations', 'purposes',
                              'regions', 'districts', 'transports', 'product_types',
-                             'exported_products'])
+                             'exported_products', 'institution'])
                 );
     }
 

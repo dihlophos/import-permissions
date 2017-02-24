@@ -67,8 +67,18 @@ class Export extends Model
         return $this->belongsTo(Transport::class);
     }
 
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
     public function permissionSpecified()
     {
         return !(is_null($this->permission_num) || is_null($this->permission_date));
+    }
+
+    public function scopeByInstitution($query, $institution_id)
+    {
+        return $query->where('institution_id','=',$institution_id);
     }
 }

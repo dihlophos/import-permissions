@@ -5,12 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Сводка</div>
+                <div class="panel-heading">Учреждения ветеринарной службы региона</div>
 
                 <div class="panel-body">
-                     <p>Здравствуйте, {{ Auth::user()->displayname }}!</p>
-                     <p>Роль: {{ Auth::user()->RoleName() }}</p>
-                     <p>Права администратора: {{ Auth::user()->isAdmin()?'да':'нет' }}</p>
+                     @foreach($institutions as $id=>$name)
+                        <ul>
+                            <li><a href="{{route('export.index', ['institution'=>$id])}}">{{ $name }}</a></li>
+                        </ul>
+                     @endforeach
                 </div>
             </div>
         </div>

@@ -24,6 +24,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::pattern('export', '[0-9]+');
+        Route::pattern('institution', '[0-9]+');
+        Route::pattern('organization', '[0-9]+');
+        Route::pattern('storage', '[0-9]+');
+        Route::pattern('district', '[0-9]+');
+
         Route::model('transport', App\Models\Transport::class);
         Route::model('purpose', App\Models\Purpose::class);
         Route::model('product_type', App\Models\ProductType::class);

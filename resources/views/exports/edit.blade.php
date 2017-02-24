@@ -109,6 +109,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="institution_id" value="{{ $export->institution_id }}">
     <div class="form-group">
         <input class="btn btn-default" type="submit" value="Сохранить">
     </div>

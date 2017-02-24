@@ -6,7 +6,7 @@
     @include('common.flash')
 
     @if(Gate::allows('modify-export',null))
-        <a href="{{route('export.create')}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
+        <a href="{{route('export.create',['institution'=>$institution_id])}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
     @endif
 
     @if (count($exports) > 0)

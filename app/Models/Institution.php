@@ -29,4 +29,9 @@ class Institution extends Model
 	{
 	    return $this->belongsToMany(District::class);
 	}
+
+    public function exports()
+    {
+        return $this->hasMany(District::class);
+    }
 }

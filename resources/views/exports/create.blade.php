@@ -51,7 +51,7 @@
             <select name="purpose_id" id="purpose" class="form-control" >
                 <option value=""></option>
                 @foreach ($purposes as $id => $purpose)
-                    <option value="{{$id}}">{{$purpose}}</option>
+                    <option value="{{ $id }}">{{$purpose}}</option>
                 @endforeach
             </select>
         </div>
@@ -60,7 +60,7 @@
             <select name="district_id" id="district" class="form-control" >
                 <option value=""></option>
                 @foreach ($districts as $id => $district)
-                    <option value="{{$id}}">{{$district}}</option>
+                    <option value="{{ $id }}">{{$district}}</option>
                 @endforeach
             </select>
         </div>
@@ -69,7 +69,7 @@
             <select name="transport_id" id="transport" class="form-control" >
                 <option value=""></option>
                 @foreach ($transports as $id => $transport)
-                    <option value="{{$id}}">{{$transport}}</option>
+                    <option value="{{ $id }}">{{$transport}}</option>
                 @endforeach
             </select>
         </div>
@@ -80,7 +80,7 @@
             <select name="region_id" id="region" class="form-control" >
                 <option value=""></option>
                 @foreach ($regions as $id => $region)
-                    <option value="{{$id}}">{{$region}}</option>
+                    <option value="{{ $id }}">{{ $region }}</option>
                 @endforeach
             </select>
         </div>
@@ -91,6 +91,7 @@
         <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">
         </div>
+        <input type='hidden' name="institution_id" value="{{ $institution_id }}">
         </fieldset>
     </fieldset>
 </form>

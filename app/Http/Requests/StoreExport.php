@@ -32,6 +32,7 @@ class StoreExport extends FormRequest
             'organization_id' => 'required',
             'storage_id' => 'required',
             'purpose_id' => 'required',
+            'institution_id' => 'required',
             'transport_id' => 'required',
             'region_id' => 'required',
             'district_id' => 'required',
