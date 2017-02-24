@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Api\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,20 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::resource('regions', 'Api\RegionController',  ['only' => [
+    	'index', 'show'
+	]]);
+
+Route::resource('regions.districts', 'Api\DistrictController',  ['only' => [
+    	'index', 'show'
+	]]);
+
+Route::group(['middleware' => 'auth'], function () {
+
+
+
+	
 });
