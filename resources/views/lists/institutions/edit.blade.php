@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@section('styles')
+<link href="{{ asset('/css/selectize.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/selectize.bootstrap3.css') }}" rel="stylesheet">
+@endsection
 @section('content')
     <!-- Отображение ошибок проверки ввода -->
     @include('common.errors')
@@ -29,10 +32,11 @@
     </fieldset>
 </form>
 
-<form action="{{route('institution.district.store', $institution->id)}}" class="form-inline text-right" id="DistrictAddForm" method="POST" accept-charset="utf-8">
+<form action="{{route('institution.district.store', $institution->id)}}" class="form-inline" id="DistrictAddForm" method="POST" accept-charset="utf-8">
     {{ csrf_field() }}
     <div class="form-group required">
-        <select name="district_id" id="institution_district-district_id" class="form-control">
+        <select name="district_id" id="institution_district-district_id" class="form-control" style="width:300px;">
+            <option value=""></option>
             @foreach ($districts as $id => $district)
                 <option value="{{$id}}">{{$district}}</option>
             @endforeach
@@ -82,4 +86,19 @@
   </div>
 </div>
 @endif
+@endsection
+
+
+@section('scripts')
+<script src="{{ asset('/js/selectize.min.js') }}"></script>
+<script type="text/javascript">
+$(function () {
+    $('#institution_district-district_id').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        placeholder: 'район'
+	});
+});
+</script>
 @endsection
