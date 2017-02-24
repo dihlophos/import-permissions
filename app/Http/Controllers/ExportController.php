@@ -63,7 +63,7 @@ class ExportController extends Controller
     {
         $export = Export::create($request->all());
         $request->session()->flash('alert-success', 'Запись успешно добавлена!');
-        return redirect()->route('export.index');
+        return redirect()->route('export.index', ['institution'=>$export->institution]);
     }
 
     /**
@@ -127,7 +127,7 @@ class ExportController extends Controller
     {
         $export->fill($request->all())->save();
         $request->session()->flash('alert-success', 'Запись успешно обновлена!');
-        return redirect()->route('export.index');
+        return redirect()->route('export.index', ['institution'=>$export->institution]);
     }
 
     /**
@@ -141,7 +141,7 @@ class ExportController extends Controller
         $export->exported_products()->delete();
         $export->delete();
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
-        return redirect()->route('export.index');
+        return redirect()->route('export.index', ['institution'=>$export->institution]);
     }
 
     /**
@@ -155,7 +155,7 @@ class ExportController extends Controller
         $export->permission_date = $request->permission_date;
         $export->save();
         $request->session()->flash('alert-success', 'Номер разрешения назначен!');
-        return redirect()->route('export.index');
+        return redirect()->route('export.index', ['institution'=>$export->institution]);
     }
 
     /**
