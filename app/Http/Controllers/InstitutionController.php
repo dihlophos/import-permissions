@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Institution;
+use App\Models\Region;
 use App\Http\Requests\StoreInstitution;
 
 class InstitutionController extends Controller
@@ -16,9 +17,10 @@ class InstitutionController extends Controller
     public function index()
     {
         $institutions = Institution::orderBy('name', 'asc')->paginate(50);
-
-        return view('institutions.index', [
+        $regions = Region::orderBy('name')->pluck('name', 'id');
+        return view('lists.institutions.index', [
             'institutions' => $institutions,
+            'regions' => $regions
         ]);
     }
 

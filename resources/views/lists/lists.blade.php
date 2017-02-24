@@ -14,6 +14,7 @@
                <li><a href="{{ URL::action('PurposeController@index') }}">Цель вывоза</a></li>
                <li><a href="{{ URL::action('ProductTypeController@index') }}">Виды грузов<a></li>
                <li><a href="{{ URL::action('StorageController@index') }}">Базы хранения</a></li>
+               <li><a href="{{ route('institution.index') }}">Учреждения</a></li>
             </ul>
         </div>
     </div>
