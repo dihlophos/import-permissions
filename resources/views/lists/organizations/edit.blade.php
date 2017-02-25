@@ -49,7 +49,7 @@
 @if (count($organization->storages) > 0)
 <div class="panel panel-default">
   <div class="panel-heading">
-    Районы
+    Базы хранения
   </div>
 
   <div class="panel-body">
