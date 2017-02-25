@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDistrictIdToStorage extends Migration
+class AddDestDistrictIdToExport extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDistrictIdToStorage extends Migration
      */
     public function up()
     {
-        Schema::table('storages', function (Blueprint $table) {
-            $table->integer('district_id')->index();
+        Schema::table('exports', function (Blueprint $table) {
+            $table->integer('dest_district_id')->index()->unsigned();
         });
     }
 
@@ -25,8 +25,8 @@ class AddDistrictIdToStorage extends Migration
      */
     public function down()
     {
-        Schema::table('storages', function (Blueprint $table) {
-            $table->dropColumn('district_id');
+        Schema::table('exports', function (Blueprint $table) {
+            $table->dropColumn('dest_district_id');
         });
     }
 }

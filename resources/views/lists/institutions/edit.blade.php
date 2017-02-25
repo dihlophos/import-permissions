@@ -19,7 +19,7 @@
                    id="InstitutionName" required="required" value="{{ $institution->name }}">
         </div>
         <div class="form-group required">
-            <label for="institution-region_id">Название</label>
+            <label for="institution-region_id">Регион</label>
             <select name="region_id" id="institution-region_id" class="form-control">
                 @foreach ($regions as $id => $region)
                     <option value="{{$id}}" {{$institution->region_id == $id ? 'selected' : ''}}>{{$region}}</option>
