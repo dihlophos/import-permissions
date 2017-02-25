@@ -17,12 +17,11 @@
             <input name="address" id="storage-address" class="form-control" placeholder="Адрес..." maxlength="255" type="text" style="width:450px">
         </div>
         <div class="form-group required">
-            <select name="district_id" id="storage-district_id" class="form-control" placeholder="район" style="width:260px">
+            <input name="district_id" id="storage-district_id" class="form-control" placeholder="Район..." style="width:260px">
+            <!--select name="district_id" id="storage-district_id" class="form-control" placeholder="район" style="width:260px">
                 <option value=""></option>
-                @foreach ($districts as $id => $district)
-                    <option value="{{$id}}">{{$district}}</option>
-                @endforeach
-            </select>
+
+            </select-->
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">
@@ -60,12 +59,7 @@
                             <input name="address" class="form-control" value="{{ $storage->address }}" maxlength="255" type="text" style="width:500px">
                         </div>
                         <div class="form-group required">
-                            <select name="district_id" id="storage-district_id" class="form-control" placeholder="район" style="width:260px">
-                                <option value=""></option>
-                                @foreach ($districts as $id => $district)
-                                    <option value="{{$id}}" {{$storage->district_id==$id?'selected':''}}>{{$district}}</option>
-                                @endforeach
-                            </select>
+                            <input name="district_id" id="storage-district_id" value="{{$storage->district_id}}" class="form-control" placeholder="Район..." style="width:260px">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
@@ -98,11 +92,19 @@
 <script src="{{ asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
 $(function () {
-    $('select').selectize({
+    $('input[name=district_id]').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
-        placeholder: 'район'
+        valueField: 'value',
+        labelField: 'name',
+        searchField: 'name',
+        placeholder: 'Район',
+        options:[
+            @foreach ($districts as $id => $district)
+            {value: {{$id}}, name: '{!! $district !!}'},
+            @endforeach
+        ]
 	});
 });
 </script>
