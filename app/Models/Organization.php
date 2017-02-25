@@ -15,6 +15,6 @@ class Organization extends Model
 
     public function storages()
 	{
-		return $this->hasMany(Storage::class);
+		return $this->belongsToMany(Storage::class);
 	}
 }
