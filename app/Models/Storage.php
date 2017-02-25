@@ -15,7 +15,7 @@ class Storage extends Model
 
     public function organization()
 	{
-		return $this->belongsTo(Organization::class);
+		return $this->belongsToMany(Organization::class);
 	}
 
     public function district()
