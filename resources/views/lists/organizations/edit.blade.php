@@ -8,23 +8,20 @@
     @include('common.errors')
     @include('common.flash')
 
-<form action="{{route('institution.update', $institution->id)}}" class="well" id="InstitutionEditForm" method="post" accept-charset="utf-8">
+<form action="{{route('organization.update', $organization->id)}}" class="well" id="OrganizationEditForm" method="post" accept-charset="utf-8">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <fieldset>
-		<legend>Редактирование учреждения</legend>
+		<legend>Редактирование организации</legend>
 		<div class="form-group required">
-            <label for="InstitutionName">Название</label>
-            <input name="name" class="form-control" maxlength="50" type="text"
-                   id="InstitutionName" required="required" value="{{ $institution->name }}">
+            <label for="organization-name">Название</label>
+            <input name="name" id="organization-name" class="form-control" value="{{ $organization->name }}"
+                   placeholder="Название..." maxlength="255" type="text" required="required">
         </div>
         <div class="form-group required">
-            <label for="institution-region_id">Название</label>
-            <select name="region_id" id="institution-region_id" class="form-control">
-                @foreach ($regions as $id => $region)
-                    <option value="{{$id}}" {{$institution->region_id == $id ? 'selected' : ''}}>{{$region}}</option>
-                @endforeach
-            </select>
+            <label for="organization-tin">ИНН</label>
+            <input name="tin" id="organization-tin" class="form-control" value="{{ $organization->tin }}"
+            placeholder="ИНН..." maxlength="255" type="number" style="width:200px">
         </div>
         <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">
@@ -32,13 +29,13 @@
     </fieldset>
 </form>
 
-<form action="{{route('institution.district.store', $institution->id)}}" class="form-inline" id="DistrictAddForm" method="POST" accept-charset="utf-8">
+<form action="{{route('organization.storage.store', $organization->id)}}" class="form-inline" id="StorageAddForm" method="POST" accept-charset="utf-8">
     {{ csrf_field() }}
     <div class="form-group required">
-        <select name="district_id" id="institution_district-district_id" class="form-control" style="width:300px;">
+        <select name="storage_id" id="organization_storage-storage_id" class="form-control" style="width:300px;">
             <option value=""></option>
-            @foreach ($districts as $id => $district)
-                <option value="{{$id}}">{{$district}}</option>
+            @foreach ($storages as $id => $storages)
+                <option value="{{$id}}">{{$storages}}</option>
             @endforeach
         </select>
     </div>
@@ -49,7 +46,7 @@
     </div>
 </form>
 <br/>
-@if (count($institution->districts) > 0)
+@if (count($organization->storages) > 0)
 <div class="panel panel-default">
   <div class="panel-heading">
     Районы
@@ -64,13 +61,13 @@
       </thead>
 
       <tbody>
-        @foreach ($institution->districts as $district)
+        @foreach ($organization->storages as $storage)
           <tr>
             <td class="table-text">
-                {{ $district->name }}
+                {{ $storage->name }}
             </td>
             <td>
-                <form action="{{route('institution.district.destroy', ['institution'=>$institution->id, 'district'=>$district->id])}}" method="POST">
+                <form action="{{route('organization.storage.destroy', ['organization'=>$organization->id, 'storage'=>$storage->id])}}" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-primary">
@@ -92,11 +89,11 @@
 <script src="{{ asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
 $(function () {
-    $('#institution_district-district_id').selectize({
+    $('#organization_storage-storage_id').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
-        placeholder: 'район'
+        placeholder: 'база хранения'
 	});
 });
 </script>

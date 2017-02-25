@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrganization;
 
@@ -16,9 +17,8 @@ class OrganizationController extends Controller
     public function index()
     {
         $organizations = Organization::orderBy('name')->paginate(50);
-
         return view('lists.organizations.index', [
-            'organizations' => $organizations,
+            'organizations' => $organizations
         ]);
     }
 
@@ -62,9 +62,14 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Organization $organization)
     {
-        //
+        $organization->load('storages');
+        $storages = Storage::orderBy('name')->pluck('name', 'id');
+        return view('lists.organizations.edit', [
+            'organization' => $organization,
+            'storages' => $storages
+        ]);
     }
 
     /**

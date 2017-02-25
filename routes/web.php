@@ -69,12 +69,16 @@ Route::group(['middleware' => 'auth'], function () {
                 'create', 'show', 'edit'
             ]]);
             Route::resource('/organization', 'OrganizationController', ['except' => [
-                'create', 'show', 'edit'
+                'create', 'show'
             ]]);
             Route::resource('/institution', 'InstitutionController', ['except' => [
                 'create', 'show'
             ]]);
             Route::resource('institution.district', 'InstitutionDistrictController', ['except' => [
+                'create', 'show', 'edit', 'update', 'index'
+            ]]);
+
+            Route::resource('organization.storage', 'OrganizationStorageController', ['except' => [
                 'create', 'show', 'edit', 'update', 'index'
             ]]);
         }

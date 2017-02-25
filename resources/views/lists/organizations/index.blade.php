@@ -31,6 +31,7 @@
         <table class="table table-striped task-table">
 
           <thead>
+              <th>Код</th>
               <th>Название</th>
               <th>ИНН</th>
               <th>Удалить</th>
@@ -39,6 +40,9 @@
           <tbody>
             @foreach ($organizations as $organization)
               <tr>
+                <td class="table-text">
+                    <a class="btn btn-primary" href="{{route('organization.edit', $organization->id)}}">{{$organization->id}}</a>
+                </td>
                 <td class="table-text" colspan="2">
                     <form class="form-inline" action="/lists/organization/{{ $organization->id }}" method="POST">
                         {{ csrf_field() }}
