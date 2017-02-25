@@ -75,23 +75,28 @@
         </div>
         <fieldset>
             <legend>Ввоз</legend>
-        <div class="form-group required">
-            <label for="region">Регион ввоза</label>
-            <select name="region_id" id="region" class="form-control" >
-                <option value=""></option>
-                @foreach ($regions as $id => $region)
-                    <option value="{{ $id }}">{{ $region }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group required">
-            <label for="address">Адрес</label>
-            <input name="address" id="address" class="form-control" type="text" placeholder="адрес">
-        </div>
-        <div class="form-group">
-            <input class="btn btn-default" type="submit" value="Сохранить">
-        </div>
-        <input type='hidden' name="institution_id" value="{{ $institution_id }}">
+            <div class="form-group required">
+                <label for="region">Регион ввоза</label>
+                <select name="region_id" id="region" class="form-control" >
+                    <option value=""></option>
+                    @foreach ($regions as $id => $region)
+                        <option value="{{ $id }}">{{ $region }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group required">
+                <label for="dest_district">Район ввоза</label>
+                <select name="dest_district_id" id="dest_district" class="form-control" placeholder="район">
+                </select>
+            </div>
+            <div class="form-group required">
+                <label for="address">Адрес</label>
+                <input name="address" id="address" class="form-control" type="text" placeholder="адрес">
+            </div>
+            <div class="form-group">
+                <input class="btn btn-default" type="submit" value="Сохранить">
+            </div>
+            <input type='hidden' name="institution_id" value="{{ $institution_id }}">
         </fieldset>
     </fieldset>
 </form>
@@ -131,12 +136,65 @@ $(function () {
 		selectOnTab: true,
         placeholder: 'транспорт'
 	});
-    $('select[name="region_id"]').selectize({
+
+    var xhr;
+	var select_region, $select_region;
+	var select_dest_district, $select_dest_district;
+    $select_region = $('select[name="region_id"]').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
-        placeholder: 'регион ввоза'
+        plugins: ['restore_on_backspace'],
+        placeholder: 'регион ввоза',
+        // onInitialize: function() {this.selected_value = this.getValue();},
+		// onDropdownClose: function($dropdown) {
+		// 	if(this.getValue()==0) {
+		// 		this.setValue(this.selected_value );
+		// 	}
+		// },
+        onChange: function(value) {
+			//value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_dest_district.disable();
+			select_dest_district.clearOptions();
+            if (!value.length) return;
+			select_dest_district.load(function(callback) {
+				xhr && xhr.abort();
+				xhr = $.ajax({
+					type: 'get',
+					url: '/api/regions/' + select_region.selected_value + '/districts',
+					success: function(results) {
+						select_dest_district.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
 	});
+
+    $select_dest_district = $('#dest_district').selectize({
+		valueField: 'id',
+		labelField: 'name',
+		searchField: ['name'],
+		plugins: ['restore_on_backspace'],
+		create: false,
+		selectOnTab: true,
+		onInitialize: function() {this.selected_value = this.getValue();},
+		onChange: function(value) {value=value==0?this.selected_value:value;this.selected_value=value;},
+		onDropdownClose: function($dropdown) {
+			if(this.getValue()==0) {
+				this.setValue(this.selected_value );
+			}
+		}
+	});
+
+	select_dest_district  = $select_dest_district[0].selectize;
+	select_region = $select_region[0].selectize;
+
+	select_dest_district.disable();
 });
 </script>
 @endsection

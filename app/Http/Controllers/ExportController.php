@@ -108,7 +108,7 @@ class ExportController extends Controller
     public function process(Export $export)
     {
         $exported_products = $export->exported_products()->orderBy('id')->paginate(50);
-        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport');
+        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'dest_district', 'transport');
         $exported_products->load('processed_products', 'product_type');
         return view(
                     'exports.process',

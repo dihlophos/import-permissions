@@ -30,7 +30,8 @@ class Export extends Model
     protected $fillable = ['storage_id',     'organization_id', 'permission_date',
                            'permission_num', 'request_date',    'request_num',
                            'purpose_id',     'region_id',       'district_id',
-                           'address',        'transport_id',    'institution_id'];
+                           'address',        'transport_id',    'institution_id',
+                           'dest_district_id'];
 
     public function exported_products()
     {
@@ -60,6 +61,11 @@ class Export extends Model
     public function district()
     {
         return $this->belongsTo(District::class);
+    }
+
+    public function dest_district()
+    {
+        return $this->belongsTo(District::class, 'dest_district_id');
     }
 
     public function transport()
