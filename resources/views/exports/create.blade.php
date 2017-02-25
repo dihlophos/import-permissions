@@ -146,6 +146,7 @@ $(function () {
 		selectOnTab: true,
         plugins: ['restore_on_backspace'],
         placeholder: 'регион ввоза',
+        // предотвращение очистки поля
         // onInitialize: function() {this.selected_value = this.getValue();},
 		// onDropdownClose: function($dropdown) {
 		// 	if(this.getValue()==0) {

@@ -10,14 +10,13 @@
     @include('common.errors')
     @include('common.flash')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <dl class="dl-horizontal">
-            <dt>№ разрешения</dt>
-            <dd>{{$export->permission_num}}</dd>
-        </dl>
-        <dl class="dl-horizontal">
-            <dt>Дата разрешения</dt>
-            <dd>{{$export->permission_date}}</dd>
+            <dt>Разрешение</dt>
+            <dd>
+                от <u>{{empty($export->permission_date)?str_repeat('&nbsp;',20):$export->permission_date}}</u>
+                № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->permission_num}}</u>
+            </dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Цель вывоза</dt>
@@ -27,12 +26,12 @@
             <dt>Районы, города ТО</dt>
             <dd>{{$export->district->name}}</dd>
         </dl>
-    </div>
-    <div class="col-md-8">
         <dl class="dl-horizontal">
             <dt>База хранения</dt>
             <dd>{{$export->storage->name}}</dd>
         </dl>
+    </div>
+    <div class="col-md-7">
         <dl class="dl-horizontal">
             <dt>Организация</dt>
             <dd>{{$export->organization->name}}</dd>
@@ -40,6 +39,10 @@
         <dl class="dl-horizontal">
             <dt>Вывоз в регион</dt>
             <dd>{{$export->region->name}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Вывоз в район</dt>
+            <dd>{{$export->dest_district->name}}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Адрес в регионе</dt>
