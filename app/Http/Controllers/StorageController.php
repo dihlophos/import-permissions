@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Storage;
+use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreStorage;
 
@@ -16,9 +17,10 @@ class StorageController extends Controller
     public function index()
     {
         $storages = Storage::orderBy('name')->paginate(50);
-
+        $districts =  District::orderBy('name')->pluck('name', 'id');
         return view('lists.storages.index', [
             'storages' => $storages,
+            'districts' => $districts
         ]);
     }
 

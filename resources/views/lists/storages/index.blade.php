@@ -1,17 +1,28 @@
 @extends('layouts.app')
-
+@section('styles')
+<link href="{{ asset('/css/selectize.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/selectize.bootstrap3.css') }}" rel="stylesheet">
+@endsection
 @section('content')
     <!-- Отображение ошибок проверки ввода -->
     @include('common.errors')
     @include('common.flash')
 
-    <form action="/lists/storage" class="form-inline text-right" id="StorageAddForm" method="POST" accept-charset="utf-8">
+    <form action="/lists/storage" class="form-inline" id="StorageAddForm" method="POST" accept-charset="utf-8">
         {{ csrf_field() }}
         <div class="form-group required">
-            <input name="name" id="storage-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:250px">
+            <input name="name" id="storage-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:200px">
         </div>
         <div class="form-group required">
-            <input name="address" id="storage-address" class="form-control" placeholder="Адрес..." maxlength="255" type="text" style="width:550px">
+            <input name="address" id="storage-address" class="form-control" placeholder="Адрес..." maxlength="255" type="text" style="width:450px">
+        </div>
+        <div class="form-group required">
+            <select name="district_id" id="storage-district_id" class="form-control" placeholder="район" style="width:260px">
+                <option value=""></option>
+                @foreach ($districts as $id => $district)
+                    <option value="{{$id}}">{{$district}}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">
@@ -43,14 +54,22 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="form-group required">
-                            <input name="name" class="form-control" value="{{ $storage->name }}" maxlength="255" type="text" style="width:250px">
+                            <input name="name" class="form-control" value="{{ $storage->name }}" maxlength="255" type="text" style="width:200px">
                         </div>
                         <div class="form-group required">
-                            <input name="address" class="form-control" value="{{ $storage->address }}" maxlength="255" type="text" style="width:550px">
+                            <input name="address" class="form-control" value="{{ $storage->address }}" maxlength="255" type="text" style="width:500px">
+                        </div>
+                        <div class="form-group required">
+                            <select name="district_id" id="storage-district_id" class="form-control" placeholder="район" style="width:260px">
+                                <option value=""></option>
+                                @foreach ($districts as $id => $district)
+                                    <option value="{{$id}}" {{$storage->district_id==$id?'selected':''}}>{{$district}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             </button>
                         </div>
                     </form>
@@ -62,7 +81,6 @@
 
                         <button class="btn btn-primary">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            Удалить
                         </button>
                     </form>
                 </td>
@@ -74,4 +92,18 @@
       </div>
     </div>
    @endif
+@endsection
+
+@section('scripts')
+<script src="{{ asset('/js/selectize.min.js') }}"></script>
+<script type="text/javascript">
+$(function () {
+    $('select').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        placeholder: 'район'
+	});
+});
+</script>
 @endsection

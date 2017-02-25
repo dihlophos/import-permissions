@@ -88,7 +88,6 @@
 @endif
 @endsection
 
-
 @section('scripts')
 <script src="{{ asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
