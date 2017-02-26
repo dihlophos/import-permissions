@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Organization;
-use App\Http\Requests\Store;
+use App\Models\Storage;
 use App\Http\Controllers\Controller;
 
 class StorageController extends Controller
@@ -14,12 +13,14 @@ class StorageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Organization $organization)
+    public function index(Request $request)
     {
-        return $organization->storages()->orderBy('name')->get();
+        $district_id = $request->district;
+        $organization_id = $request->organization;
+        return Storage::byOrganization($organization_id)->orderBy('name')->get();
     }
 
-    public function show(Organization $region, Storage $storage)
+    public function show(Storage $storage)
     {
         return $storage;
     }

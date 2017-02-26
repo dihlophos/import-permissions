@@ -13,7 +13,7 @@ class Storage extends Model
      */
     protected $fillable = ['name', 'address', 'district_id'];
 
-    public function organization()
+    public function organizations()
 	{
 		return $this->belongsToMany(Organization::class);
 	}
@@ -22,4 +22,19 @@ class Storage extends Model
 	{
 		return $this->belongsTo(District::class);
 	}
+
+    public function scopeByOrganization($query, $organization_id)
+    {
+        if (is_null($organization_id)) { return $query; }
+        return $query->whereHas('organizations', function($q) use ($organization_id)
+            {
+                $q->where('organization_id', '=', $organization_id);
+            });
+    }
+
+    public function scopeByDistrict($query, $district_id)
+    {
+        if (is_null($district_id)) { return $query; }
+        return $query->where('district_id', '=', $district_id);
+    }
 }

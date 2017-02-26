@@ -31,7 +31,7 @@ Route::resource('organizations', 'Api\OrganizationController',  ['only' => [
     	'index', 'show'
 ]]);
 
-Route::resource('organizations.storages', 'Api\StorageController',  ['only' => [
+Route::resource('storages', 'Api\StorageController',  ['only' => [
     	'index', 'show'
 ]]);
 
