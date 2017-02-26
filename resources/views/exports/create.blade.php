@@ -35,10 +35,6 @@
         <div class="form-group required">
             <label for="storage">Место хранения</label>
             <select name="storage_id" id="storage" class="form-control" >
-                <option value=""></option>
-                @foreach ($storages as $id => $storage)
-                    <option value="{{$id}}">{{$storage}}</option>
-                @endforeach
             </select>
         </div>
         @if(Gate::allows('specify-export-permission', $institution_id))

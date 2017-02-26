@@ -40,16 +40,16 @@ class ExportController extends Controller
     public function create(Request $request)
     {
         $institution_id = intval($request->institution);
-        $storages = Storage::orderBy('name')->pluck('name', 'id');
+        $institution = Institution::findOrFail($institution_id);
         $organizations = Organization::orderBy('name')->pluck('name', 'id');
         $purposes = Purpose::orderBy('name')->pluck('name', 'id');
         $regions = Region::orderBy('name')->pluck('name', 'id');
-        $districts = District::orderBy('name')->pluck('name', 'id');
+        $districts = District::byRegion($institution->region_id)->orderBy('name')->pluck('name', 'id');
         $transports = Transport::orderBy('name')->pluck('name', 'id');
         return view(
                     'exports.create',
-                    compact(['storages', 'organizations', 'purposes',
-                             'regions', 'districts', 'transports', 'institution_id'])
+                    compact(['organizations', 'purposes', 'regions',
+                             'districts', 'transports', 'institution_id'])
                 );
     }
 
