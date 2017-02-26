@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('specify-export-permission', function ($user, $institution_id) {
             if ($user->isAdmin()) { return true; }
 
-            if ($user->roleName() === "depadmin") { return $user->institution_id === $institution_id; }
+            if ($user->roleName() === "depadmin") { return true; }
             
             return false;
         });
@@ -40,7 +40,9 @@ class AuthServiceProvider extends ServiceProvider
             
             if ($user->isAdmin()) { return true; }
 
-            if (($user->roleName() === "depadmin") || ($user->roleName() === "instadmin"))
+            if ($user->roleName() === "depadmin") { return true; }
+
+            if ($user->roleName() === "instadmin")
             {
                 return $user->institution_id === $institution_id;
             }
@@ -50,7 +52,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('view-export', function ($user, $institution_id) {
             if ($user->isAdmin()) { return true; }
-            
+
+            if ($user->roleName() === "depadmin") { return true; }
+
             return $user->institution_id === $institution_id;
         });
 
