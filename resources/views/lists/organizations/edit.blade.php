@@ -53,7 +53,7 @@
   </div>
 
   <div class="panel-body">
-    <table class="table table-striped task-table">
+    <table class="table table-striped">
 
       <thead>
         <th>Название</th>
@@ -63,7 +63,7 @@
       <tbody>
         @foreach ($organization->storages as $storage)
           <tr>
-            <td class="table-text">
+            <td>
                 {{ $storage->name }}
             </td>
             <td>

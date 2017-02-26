@@ -24,6 +24,15 @@
             </select>
         </div>
         <div class="form-group required">
+            <label for="district">Район происхождения</label>
+            <select name="district_id" id="district" class="form-control" >
+                <option value=""></option>
+                @foreach ($districts as $id => $district)
+                    <option value="{{ $id }}">{{$district}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group required">
             <label for="storage">Место хранения</label>
             <select name="storage_id" id="storage" class="form-control" >
                 <option value=""></option>
@@ -52,15 +61,6 @@
                 <option value=""></option>
                 @foreach ($purposes as $id => $purpose)
                     <option value="{{ $id }}">{{$purpose}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group required">
-            <label for="district">Район происхождения</label>
-            <select name="district_id" id="district" class="form-control" >
-                <option value=""></option>
-                @foreach ($districts as $id => $district)
-                    <option value="{{ $id }}">{{$district}}</option>
                 @endforeach
             </select>
         </div>
@@ -106,29 +106,12 @@
 <script src="{{ URL::asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
 $(function () {
-    $('select[name="organization_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'организация'
-	});
-    $('select[name="storage_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'место хранения'
-	});
+    var xhr;
     $('select[name="purpose_id"]').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
         placeholder: 'цель вывоза'
-	});
-    $('select[name="district_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'район происхождения'
 	});
     $('select[name="transport_id"]').selectize({
 		create: false,
@@ -137,7 +120,89 @@ $(function () {
         placeholder: 'транспорт'
 	});
 
-    var xhr;
+    var select_storage, $select_storage;
+    var select_org, $select_org;
+    var select_district, $select_district;
+    $select_org = $('select[name="organization_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        plugins: ['restore_on_backspace'],
+        placeholder: 'организация',
+        onChange: function(value) {
+			//value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_storage.disable();
+			select_storage.clearOptions();
+            if (!value.length || !select_district.selected_value || !select_district.selected_value.length ) return;
+			select_storage.load(function(callback) {
+				xhr && xhr.abort();
+				xhr = $.ajax({
+					type: 'get',
+					url: '/api/storages?organization=' + select_org.selected_value + '&district=' + select_district.selected_value,
+					success: function(results) {
+						select_storage.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+    $select_district = $('select[name="district_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        plugins: ['restore_on_backspace'],
+        placeholder: 'район происхождения',
+        onChange: function(value) {
+			//value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_storage.disable();
+			select_storage.clearOptions();
+            if (!value.length || !select_org.selected_value || !select_org.selected_value.length) return;
+			select_storage.load(function(callback) {
+				xhr && xhr.abort();
+				xhr = $.ajax({
+					type: 'get',
+					url: '/api/storages?organization=' + select_org.selected_value + '&district=' + select_district.selected_value,
+					success: function(results) {
+						select_storage.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+    $select_storage = $('select[name="storage_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        placeholder: 'место хранения',
+        valueField: 'id',
+        labelField: 'name',
+        searchField: ['name'],
+        plugins: ['restore_on_backspace'],
+        onInitialize: function() {this.selected_value = this.getValue();},
+        onChange: function(value) {value=value==0?this.selected_value:value;this.selected_value=value;},
+        onDropdownClose: function($dropdown) {
+            if(this.getValue()==0) {
+                this.setValue(this.selected_value );
+            }
+        }
+	});
+
+    select_org  = $select_org[0].selectize;
+    select_district  = $select_district[0].selectize;
+    select_storage  = $select_storage[0].selectize;
+
+    select_storage.disable();
+
 	var select_region, $select_region;
 	var select_dest_district, $select_dest_district;
     $select_region = $('select[name="region_id"]').selectize({
