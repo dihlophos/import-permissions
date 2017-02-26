@@ -85,6 +85,7 @@ class Export extends Model
 
     public function scopeByInstitution($query, $institution_id)
     {
+        if (is_null($institution_id)) { return $query; }
         return $query->where('institution_id','=',$institution_id);
     }
 }
