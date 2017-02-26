@@ -44,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
 
             if ($user->roleName() === "instadmin")
             {
-                return $user->institution_id === $institution_id;
+                return $user->institution->id === $institution_id;
             }
 
             return false;
@@ -55,14 +55,14 @@ class AuthServiceProvider extends ServiceProvider
 
             if ($user->roleName() === "depadmin") { return true; }
 
-            return $user->institution_id === $institution_id;
+            return $user->institution->id === $institution_id;
         });
 
         Gate::define('process-export', function ($user, $institution_id) {
 
             if ($user->isAdmin()) { return true; }
 
-            if ($user->roleName() === "instspec") { return $user->institution_id === $institution_id; }
+            if ($user->roleName() === "instspec") { return $user->institution->id === $institution_id; }
             
             return false;
         });

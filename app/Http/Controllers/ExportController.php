@@ -23,7 +23,7 @@ class ExportController extends Controller
      */
     public function index(Request $request)
     {
-        $instituition_id = $request->institution;
+        $instituition_id = intval($request->institution);
         $exports = Export::byInstitution($instituition_id)->orderBy('id', 'desc')->paginate(50);
 
         return view('exports.index', [
@@ -39,7 +39,7 @@ class ExportController extends Controller
      */
     public function create(Request $request)
     {
-        $institution_id = $request->institution;
+        $institution_id = intval($request->institution);
         $storages = Storage::orderBy('name')->pluck('name', 'id');
         $organizations = Organization::orderBy('name')->pluck('name', 'id');
         $purposes = Purpose::orderBy('name')->pluck('name', 'id');

@@ -5,7 +5,7 @@
     @include('common.errors')
     @include('common.flash')
 
-    @if(Gate::allows('modify-export',$institution_id))
+    @if(Gate::allows('modify-export', $institution_id))
         <a href="{{route('export.create',['institution'=>$institution_id])}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
     @endif
 
@@ -59,6 +59,7 @@
                                         <input type="hidden" name="transport_id" value="{{$export->transport_id}}">
                                         <input type="hidden" name="region_id" value="{{$export->region_id}}">
                                         <input type="hidden" name="address" value="{{$export->address}}">
+                                        <input type="hidden" name="institution_id" value="{{$export->institution_id}}">
                                         <input type="date" name="permission_date" value="{{$export->permission_date}}"
                                                class="form-control">
                                         <input type="text" name="permission_num" value="{{$export->permission_num}}"

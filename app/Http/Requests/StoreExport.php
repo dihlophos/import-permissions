@@ -16,9 +16,9 @@ class StoreExport extends FormRequest
     {
         if (!is_null($this->permission_num) || !is_null($this->permission_date))
         {
-            return $this->user()->can('specify-export-permission', null);
+            return $this->user()->can('specify-export-permission', intval($this->institution_id));
         }
-        return $this->user()->can('modify-export', null);
+        return $this->user()->can('modify-export', intval($this->institution_id));
     }
 
     /**
