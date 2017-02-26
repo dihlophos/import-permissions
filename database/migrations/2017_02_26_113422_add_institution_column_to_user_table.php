@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddInstitutionColumtToUserTable extends Migration
+class AddInstitutionColumnToUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddInstitutionColumtToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('institution_id')->index();
+            $table->integer('institution_id')->nullable()->index();
         });
     }
 
