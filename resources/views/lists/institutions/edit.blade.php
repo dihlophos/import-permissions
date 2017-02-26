@@ -49,43 +49,43 @@
     </div>
 </form>
 <br/>
-@if (count($institution->districts) > 0)
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Районы
-  </div>
+    @if (count($institution->districts) > 0)
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Районы
+      </div>
 
-  <div class="panel-body">
-    <table class="table table-striped task-table">
+      <div class="panel-body">
+        <table class="table table-striped task-table">
 
-      <thead>
-        <th>Название</th>
-        <th>Удалить</th>
-      </thead>
+          <thead>
+            <th>Название</th>
+            <th>Удалить</th>
+          </thead>
 
-      <tbody>
-        @foreach ($institution->districts as $district)
-          <tr>
-            <td class="table-text">
-                {{ $district->name }}
-            </td>
-            <td>
-                <form action="{{route('institution.district.destroy', ['institution'=>$institution->id, 'district'=>$district->id])}}" method="POST">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                    <button class="btn btn-primary">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        Удалить
-                    </button>
-                </form>
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
-</div>
-@endif
+          <tbody>
+            @foreach ($institution->districts as $district)
+              <tr>
+                <td class="table-text">
+                    {{ $district->name }}
+                </td>
+                <td>
+                    <form action="{{route('institution.district.destroy', ['institution'=>$institution->id, 'district'=>$district->id])}}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-primary">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            Удалить
+                        </button>
+                    </form>
+                </td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+    @endif
 @endsection
 
 @section('scripts')
