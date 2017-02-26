@@ -36,7 +36,7 @@
                     @endforeach
                 </select>
             </div>
-            @if(Gate::allows('specify-export-permission', null))
+            @if(Gate::allows('specify-export-permission', $export->institution_id))
                 <div class="form-group required">
                     <label class="col-sm-2" for="permission_date">Разрешение от</label>
                     <label class="col-sm-10" for="permission_num">№</label>

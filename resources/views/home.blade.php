@@ -8,11 +8,13 @@
                 <div class="panel-heading">Учреждения ветеринарной службы региона</div>
 
                 <div class="panel-body">
-                     @foreach($institutions as $id=>$name)
+                    @foreach($institutions as $id=>$name)
                         <ul>
-                            <li><a href="{{route('export.index', ['institution'=>$id])}}">{{ $name }}</a></li>
+                            @if(Gate::allows('view-export',$id))
+                                <li><a href="{{route('export.index', ['institution'=>$id])}}">{{ $name }}</a></li>
+                            @endif
                         </ul>
-                     @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>

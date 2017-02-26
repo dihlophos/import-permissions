@@ -5,7 +5,7 @@
     @include('common.errors')
     @include('common.flash')
 
-    @if(Gate::allows('modify-export',null))
+    @if(Gate::allows('modify-export',$institution_id))
         <a href="{{route('export.create',['institution'=>$institution_id])}}" class="btn btn-primary" role="button">Добавить</a><br/><br/>
     @endif
 
