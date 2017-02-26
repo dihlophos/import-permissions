@@ -28,12 +28,24 @@
                 </select>
             </div>
             <div class="form-group required">
+                <label for="district">Район происхождения</label>
+                <select name="district_id" id="district" class="form-control" >
+                    <option value=""></option>
+                    @foreach ($districts as $id => $district)
+                        <option value="{{$id}}" {{$export->district_id==$id?'selected':''}}>{{$district}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group required">
                 <label for="storage">Место хранения</label>
                 <select name="storage_id" id="storage" class="form-control" >
+                    <option value="{{$export->storage_id}}">{{$export->storage->name}}</option>
+                    <!--
                     <option value=""></option>
                     @foreach ($storages as $id => $storage)
                         <option value="{{$id}}" {{$export->storage_id==$id?'selected':''}}>{{$storage}}</option>
                     @endforeach
+                    -->
                 </select>
             </div>
             @if(Gate::allows('specify-export-permission', $export->institution_id))
@@ -66,15 +78,6 @@
                     <option value=""></option>
                     @foreach ($purposes as $id => $purpose)
                         <option value="{{$id}}" {{$export->purpose_id==$id?'selected':''}}>{{$purpose}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group required">
-                <label for="district">Район происхождения</label>
-                <select name="district_id" id="district" class="form-control" >
-                    <option value=""></option>
-                    @foreach ($districts as $id => $district)
-                        <option value="{{$id}}" {{$export->district_id==$id?'selected':''}}>{{$district}}</option>
                     @endforeach
                 </select>
             </div>
@@ -234,29 +237,12 @@
 <script src="{{ asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
 $(function () {
-    $('select[name="organization_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'организация'
-	});
-    $('select[name="storage_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'место хранения'
-	});
+    var storage_xhr;
     $('select[name="purpose_id"]').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
         placeholder: 'цель вывоза'
-	});
-    $('select[name="district_id"]').selectize({
-		create: false,
-		persist: false,
-		selectOnTab: true,
-        placeholder: 'район происхождения'
 	});
     $('select[name="transport_id"]').selectize({
 		create: false,
@@ -264,7 +250,123 @@ $(function () {
 		selectOnTab: true,
         placeholder: 'транспорт'
 	});
-    var xhr;
+
+    var select_storage, $select_storage;
+    var select_org, $select_org;
+    var select_district, $select_district;
+    $select_org = $('select[name="organization_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        plugins: ['restore_on_backspace'],
+        placeholder: 'организация',
+        onInitialize: function() {
+            this.selected_value = this.getValue();
+        },
+		onDropdownClose: function($dropdown) {
+			if(this.getValue()==0) {
+				this.setValue(this.selected_value );
+			}
+		},
+        onChange: function(value) {
+            console.log('select_org');
+			//value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_storage.disable();
+			select_storage.clearOptions();
+            if (!value.length || !select_district.selected_value || !select_district.selected_value.length ) return;
+			select_storage.load(function(callback) {
+				storage_xhr && storage_xhr.abort();
+				storage_xhr = $.ajax({
+					type: 'get',
+					url: '/api/storages?organization=' + select_org.selected_value + '&district=' + select_district.selected_value,
+					success: function(results) {
+						select_storage.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+    $select_district = $('select[name="district_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        plugins: ['restore_on_backspace'],
+        placeholder: 'район происхождения',
+        onInitialize: function() {
+            this.selected_value = this.getValue();
+        },
+		onDropdownClose: function($dropdown) {
+			if(this.getValue()==0) {
+				this.setValue(this.selected_value );
+			}
+		},
+        onChange: function(value) {
+            console.log('$select_district');
+			//value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_storage.disable();
+			select_storage.clearOptions();
+            if (!value.length || !select_org.selected_value || !select_org.selected_value.length) return;
+			select_storage.load(function(callback) {
+				storage_xhr && storage_xhr.abort();
+				storage_xhr = $.ajax({
+					type: 'get',
+					url: '/api/storages?organization=' + select_org.selected_value + '&district=' + select_district.selected_value,
+					success: function(results) {
+						select_storage.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+    select_org  = $select_org[0].selectize;
+    select_district  = $select_district[0].selectize;
+    $select_storage = $('select[name="storage_id"]').selectize({
+		create: false,
+		persist: false,
+		selectOnTab: true,
+        placeholder: 'место хранения',
+        valueField: 'id',
+        labelField: 'name',
+        searchField: ['name'],
+        plugins: ['restore_on_backspace'],
+        onInitialize: function() {
+            console.log('$select_storage');
+            this.selected_value = this.getValue();
+            this.load(function(callback) {
+				storage_xhr && storage_xhr.abort();
+				storage_xhr = $.ajax({
+					type: 'get',
+					url: '/api/storages?organization=' + select_org.selected_value + '&district=' + select_district.selected_value,
+					success: function(results) {
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+        },
+        onChange: function(value) {value=value==0?this.selected_value:value;this.selected_value=value;},
+        onDropdownClose: function($dropdown) {
+            if(this.getValue()==0) {
+                this.setValue(this.selected_value );
+            }
+        }
+	});
+
+    select_storage  = $select_storage[0].selectize;
+
+    var dest_district_xhr;
 	var select_region, $select_region;
 	var select_dest_district, $select_dest_district;
 
@@ -290,8 +392,8 @@ $(function () {
 			select_dest_district.clearOptions();
             if (!value.length) return;
 			select_dest_district.load(function(callback) {
-				xhr && xhr.abort();
-				xhr = $.ajax({
+				dest_district_xhr && dest_district_xhr.abort();
+				dest_district_xhr = $.ajax({
 					type: 'get',
 					url: '/api/regions/' + select_region.selected_value + '/districts',
 					success: function(results) {
@@ -318,8 +420,8 @@ $(function () {
         onInitialize: function() {
             this.selected_value = this.getValue();
             this.load(function(callback) {
-				xhr && xhr.abort();
-				xhr = $.ajax({
+				dest_district_xhr && dest_district_xhr.abort();
+				dest_district_xhr = $.ajax({
 					type: 'get',
 					url: '/api/regions/' + select_region.selected_value + '/districts',
 					success: function(results) {

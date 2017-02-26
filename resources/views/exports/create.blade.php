@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ URL::asset('/css/selectize.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('/css/selectize.bootstrap3.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/selectize.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/selectize.bootstrap3.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

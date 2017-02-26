@@ -85,11 +85,12 @@ class ExportController extends Controller
      */
     public function edit(Export $export)
     {
+        $export->load('institution');
         $storages = Storage::orderBy('name')->pluck('name', 'id');
         $organizations = Organization::orderBy('name')->pluck('name', 'id');
         $purposes = Purpose::orderBy('name')->pluck('name', 'id');
         $regions = Region::orderBy('name')->pluck('name', 'id');
-        $districts = District::orderBy('name')->pluck('name', 'id');
+        $districts = District::byRegion($export->institution->region_id)->orderBy('name')->pluck('name', 'id');
         $transports = Transport::orderBy('name')->pluck('name', 'id');
         $product_types = ProductType::orderBy('name')->pluck('name', 'id');
         $exported_products = $export->exported_products()->orderBy('id')->paginate(50);
