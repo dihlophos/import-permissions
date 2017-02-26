@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
     public function roleName()
     {
         return $this->role->internal_name;

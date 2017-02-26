@@ -34,4 +34,9 @@ class Institution extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(Institution::class);
+    }
 }
