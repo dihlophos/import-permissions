@@ -17,7 +17,7 @@ class StorageController extends Controller
     {
         $district_id = $request->district;
         $organization_id = $request->organization;
-        return Storage::byOrganization($organization_id)->orderBy('name')->get();
+        return Storage::byOrganization($organization_id)->byDistrict($district_id)->orderBy('name')->get();
     }
 
     public function show(Storage $storage)
