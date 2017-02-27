@@ -80,8 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('institution.district', 'InstitutionDistrictController', ['except' => [
                 'create', 'show', 'edit', 'update', 'index'
             ]]);
-
             Route::resource('organization.storage', 'OrganizationStorageController', ['except' => [
+                'create', 'show', 'edit', 'update', 'index'
+            ]]);
+            Route::resource('user.storage', 'UserStorageController', ['except' => [
                 'create', 'show', 'edit', 'update', 'index'
             ]]);
         }

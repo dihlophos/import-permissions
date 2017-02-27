@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Storage;
 use App\Http\Requests\StoreUser;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,8 +22,8 @@ class UserController extends Controller
         $users = User::orderBy('displayname')->paginate(50);
         $institutions = Institution::orderBy('name', 'asc')->pluck('name', 'id');
         $roles = Role::orderBy('name', 'asc')->pluck('name', 'id');
-        
-        return view('lists.users.index', 
+
+        return view('lists.users.index',
             compact('users', 'institutions', 'roles')
             );
     }
@@ -49,10 +50,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $user->load('storages');
+        $storages = Storage::orderBy('name')->pluck('name', 'id');
         $institutions = Institution::orderBy('name', 'asc')->pluck('name', 'id');
         $roles = Role::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('lists.users.edit', compact('user', 'institutions', 'roles'));
+        return view('lists.users.edit', compact('user', 'institutions', 'roles', 'storages'));
     }
 
     /**

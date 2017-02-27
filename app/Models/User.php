@@ -48,6 +48,11 @@ class User extends Authenticatable
         return ($this->roleName() === "appadmin");
     }
 
+    public function storages()
+	{
+		return $this->belongsToMany(Storage::class);
+	}
+
     public function scopeByUserName($query, $username)
     {
         return $query->where('username', '=', $username)->first();
