@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Organization;
+use App\Models\User;
 use App\Models\Storage;
 
-class OrganizationStorageController extends Controller
+class UserStorageController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -14,11 +14,11 @@ class OrganizationStorageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Organization $organization)
+    public function store(Request $request, User $user)
     {
-        $organization->storages()->attach($request->storage_id);
+        $user->storages()->attach($request->storage_id);
         $request->session()->flash('alert-success', 'Запись успешно добавлена!');
-        return redirect()->route('organization.edit', $organization->id);
+        return redirect()->route('user.edit', $user->id);
     }
 
     /**
@@ -27,10 +27,10 @@ class OrganizationStorageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Organization $organization, Storage $storage)
+    public function destroy(Request $request, User $user, Storage $storage)
     {
-        $organization->storages()->detach($storage->id);
+        $user->storages()->detach($storage->id);
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
-        return redirect()->route('organization.edit', $organization->id);
+        return redirect()->route('user.edit', $user->id);
     }
 }
