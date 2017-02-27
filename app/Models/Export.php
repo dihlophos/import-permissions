@@ -88,4 +88,10 @@ class Export extends Model
         if (is_null($institution_id)) { return $query; }
         return $query->where('institution_id','=',$institution_id);
     }
+
+    public function scopeByStorage($query, $storage_id)
+    {
+        if (is_null($storage_id)) { return $query; }
+        return $query->where('storage_id','=',$storage_id);
+    }
 }

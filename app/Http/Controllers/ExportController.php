@@ -24,7 +24,16 @@ class ExportController extends Controller
     public function index(Request $request)
     {
         $instituition_id = intval($request->institution);
-        $exports = Export::byInstitution($instituition_id)->orderBy('id', 'desc')->paginate(50);
+        $query = Export::byInstitution($instituition_id);
+
+        $storage_ids = $request->user()->storages->pluck('id');
+
+        if ($request->user()->RoleName() === 'instspec') //TODO: move to model
+        {
+        	$query = $query->whereIn('storage_id', $storage_ids);
+        }
+
+        $exports = $query->orderBy('id', 'desc')->paginate(50);
 
         return view('exports.index', [
             'exports' => $exports,
