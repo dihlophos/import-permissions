@@ -7,9 +7,9 @@ try{
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
     $path = resource_path('views/documents/Разрешение на вывоз.docx');
     $document = $phpWord->loadTemplate($path);
-    $document->setValue('exports_permission_date', $export->permission_date);
+    $document->setValue('exports_permission_date', date_format(date_create($export->permission_date),'d.m.Y'));
     $document->setValue('exports_permission_num', $export->permission_num);
-    $document->setValue('exports_request_date', $export->request_date);
+    $document->setValue('exports_request_date', date_format(date_create($export->request_date),'d.m.Y'));
     $document->setValue('exports_request_num', $export->request_num);
     $document->setValue('institution_name', 'Главное управление "Государственная инспекция по ветеринарии" Тверской области');
     $document->setValue('currdate', date('Y'));
