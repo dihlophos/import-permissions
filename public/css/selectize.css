@@ -322,3 +322,24 @@
   opacity: 0.5;
   background-color: #fafafa;
 }
+
+/*CUSTOMS*/
+.selectize-control.perm-districts .selectize-input [data-value] .name + .region {
+    margin-left: 5px;
+}
+
+.selectize-control.perm-districts span.region {
+    opacity: 0.5;
+}
+
+.selectize-control.perm-districts .selectize-dropdown .caption {
+	font-size: 12px;
+	display: block;
+	opacity: 0.5;
+}
+
+label {
+	display: block;
+	font-weight: normal;
+	margin-bottom: 10px;
+}

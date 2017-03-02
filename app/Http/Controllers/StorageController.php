@@ -17,7 +17,7 @@ class StorageController extends Controller
     public function index()
     {
         $storages = Storage::orderBy('name')->paginate(50);
-        $districts =  District::orderBy('name')->pluck('name', 'id');
+        $districts =  District::with('region')->orderBy('name')->get();
         return view('lists.storages.index', [
             'storages' => $storages,
             'districts' => $districts
