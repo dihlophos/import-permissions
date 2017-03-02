@@ -69,11 +69,9 @@ class InstitutionController extends Controller
     {
         $institution->load('districts');
         $regions = Region::orderBy('name')->pluck('name', 'id');
-        $districts = District::orderBy('name')->pluck('name', 'id');
         return view('lists.institutions.edit', [
             'institution' => $institution,
-            'regions' => $regions,
-            'districts' => $districts
+            'regions' => $regions
         ]);
     }
 

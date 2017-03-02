@@ -37,9 +37,6 @@
     <div class="form-group required">
         <select name="district_id" id="institution_district-district_id" class="form-control" style="width:300px;">
             <option value=""></option>
-            @foreach ($districts as $id => $district)
-                <option value="{{$id}}">{{$district}}</option>
-            @endforeach
         </select>
     </div>
     <div class="form-group">
@@ -92,12 +89,84 @@
 <script src="{{ asset('/js/selectize.min.js') }}"></script>
 <script type="text/javascript">
 $(function () {
-    $('#institution_district-district_id').selectize({
+
+    var district_xhr;
+	var select_region, $select_region;
+	var select_district, $select_district;
+
+    $select_region = $('#institution-region_id').selectize({
 		create: false,
 		persist: false,
 		selectOnTab: true,
-        placeholder: 'район'
+        plugins: ['restore_on_backspace'],
+        placeholder: 'регион',
+        //предотвращение очистки поля
+        onInitialize: function() {
+            this.selected_value = this.getValue();
+        },
+		onDropdownClose: function($dropdown) {
+			if(this.getValue()==0) {
+				this.setValue(this.selected_value );
+			}
+		},
+        onChange: function(value) {
+			value=value==0||value==''?this.selected_value:value;
+            this.selected_value=value;
+			select_district.disable();
+			select_district.clearOptions();
+            if (!value.length) return;
+			select_district.load(function(callback) {
+				district_xhr && district_xhr.abort();
+				district_xhr = $.ajax({
+					type: 'get',
+					url: '/api/regions/' + select_region.selected_value + '/districts',
+					success: function(results) {
+						select_district.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
 	});
+
+    select_region = $select_region[0].selectize;
+
+    $select_district = $('#institution_district-district_id').selectize({
+		valueField: 'id',
+		labelField: 'name',
+		searchField: ['name'],
+		plugins: ['restore_on_backspace'],
+		create: false,
+		selectOnTab: true,
+        placeholder: 'район',
+        onInitialize: function() {
+            this.selected_value = this.getValue();
+            this.load(function(callback) {
+				district_xhr && district_xhr.abort();
+				district_xhr = $.ajax({
+					type: 'get',
+					url: '/api/regions/' + select_region.selected_value + '/districts',
+					success: function(results) {
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+        },
+		onChange: function(value) {value=value==0?this.selected_value:value;this.selected_value=value;},
+		onDropdownClose: function($dropdown) {
+			if(this.getValue()==0) {
+				this.setValue(this.selected_value );
+			}
+		}
+	});
+
+	select_district  = $select_district[0].selectize;
 });
 </script>
 @endsection
