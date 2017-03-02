@@ -24,7 +24,8 @@ class StoreOrganization extends FormRequest
      public function rules()
      {
          return [
-              'name' => 'required|max:255|unique:organizations,name,'.($this->organization?$this->organization->id:0)
+              'name' => 'required|max:255|unique:organizations,name,'.($this->organization?$this->organization->id:0),
+              'tin' => 'required'
          ];
      }
 
@@ -32,6 +33,7 @@ class StoreOrganization extends FormRequest
      {
          return [
              'name.required' => 'Не указано название',
+             'tin.required' => 'Не указан ИНН'
          ];
      }
 }
