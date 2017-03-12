@@ -26,7 +26,7 @@ class IndexUsernameColumnInUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropUnique('users_username_index');
+            $table->dropUnique('users_username_unique');
         });
     }
 }

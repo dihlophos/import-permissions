@@ -26,7 +26,7 @@ class AddInstitutionIdToExportTable extends Migration
     public function down()
     {
         Schema::table('exports', function (Blueprint $table) {
-            $table->integer('institution_id')->index();
+            $table->dropColumn('institution_id');
         });
     }
 }
