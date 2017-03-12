@@ -26,7 +26,11 @@ class IncreaseOrganizationTinLength extends Migration
     public function down()
     {
         Schema::table('organizations', function (Blueprint $table) {
-            $table->string('tin', 10)->change();
+            $table->dropColumn('tin');
+        });
+        Schema::table('organizations', function (Blueprint $table) {
+            $table->integer('tin');
         });
     }
+
 }
