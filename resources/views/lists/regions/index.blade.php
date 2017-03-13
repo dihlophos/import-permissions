@@ -10,6 +10,9 @@
         <div class="form-group required">
             <input name="name" id="region-name" class="form-control" placeholder="Название..." maxlength="255" type="text" style="width:800px">
         </div>
+        <div class="form-group required">
+            <input name="index" id="region-index" class="form-control" placeholder="Индекс..." maxlength="2" type="text" style="width:100px">
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-plus" aria-hidden="true"></i> Добавить
@@ -27,16 +30,20 @@
         {{$regions->links()}}
         <table class="table table-striped task-table">
 
-          <thead>
-            <th>Название</th>
-            <th>Удалить</th>
-          </thead>
+            <thead>
+                <th>Название</th>
+                <th>Код</th>
+                <th>Удалить</th>
+            </thead>
 
-          <tbody>
+            <tbody>
             @foreach ($regions as $region)
               <tr>
                 <td class="table-text">
                     <a href="/lists/region/{{ $region->id }}/edit">{{ $region->name }}</a>
+                </td>
+                <td class="table-text">
+                    {{ $region->index }}
                 </td>
                 <td>
                     <form action="/lists/region/{{ $region->id }}" method="POST">

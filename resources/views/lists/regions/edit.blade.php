@@ -12,7 +12,11 @@
 		<legend>Редактирование региона</legend>
 		<div class="form-group required">
             <label for="RegionName">Название</label>
-            <input name="name" class="form-control" maxlength="50" type="text" id="RegionName" required="required" value="{{ $region->name }}">
+            <input name="name" class="form-control" maxlength="255" type="text" id="RegionName" required="required" value="{{ $region->name }}">
+        </div>
+        <div class="form-group required">
+            <label for="RegionIndex">Индекс</label>
+            <input name="index" class="form-control" maxlength="2" type="text" id="RegionIndex" required="required" value="{{ $region->index }}">
         </div>
         <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">

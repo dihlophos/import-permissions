@@ -11,7 +11,7 @@ class Region extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'index'];
 
     public function districts()
     {
