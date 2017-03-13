@@ -12,6 +12,10 @@
                    maxlength="255" type="text" style="width:600px">
         </div>
         <div class="form-group required">
+            <input name="index" id="institution-index" class="form-control" placeholder="Индекс..."
+                   maxlength="3" type="text" style="width:100px">
+        </div>
+        <div class="form-group required">
             <select name="region_id" id="institution-region_id" class="form-control">
                 @foreach ($regions as $id => $region)
                     <option value="{{$id}}">{{$region}}</option>
@@ -50,7 +54,10 @@
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
                             <div class="form-group required">
-                                <input name="name" class="form-control" value="{{ $institution->name }}" maxlength="255" type="text" style="width:400px">
+                                <input name="name" class="form-control" value="{{ $institution->name }}" maxlength="255" type="text" style="width:300px">
+                            </div>
+                            <div class="form-group required">
+                                <input name="index" class="form-control" value="{{ $institution->index }}" maxlength="2" type="text" style="width:100px">
                             </div>
                             <div class="form-group required">
                                 <select name="region_id" id="institution-region_id" class="form-control">

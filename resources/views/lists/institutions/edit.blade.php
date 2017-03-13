@@ -15,8 +15,13 @@
 		<legend>Редактирование учреждения</legend>
 		<div class="form-group required">
             <label for="InstitutionName">Название</label>
-            <input name="name" class="form-control" maxlength="50" type="text"
+            <input name="name" class="form-control" maxlength="255" type="text"
                    id="InstitutionName" required="required" value="{{ $institution->name }}">
+        </div>
+        <div class="form-group required">
+            <label for="InstitutionIndex">Индекс</label>
+            <input name="index" class="form-control" maxlength="2" type="text"
+                   id="InstitutionIndex" required="required" value="{{ $institution->index }}">
         </div>
         <div class="form-group required">
             <label for="institution-region_id">Регион</label>

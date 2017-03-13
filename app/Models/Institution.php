@@ -18,7 +18,7 @@ class Institution extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'region_id'];
+    protected $fillable = ['name', 'region_id', 'index'];
 
     public function region()
     {
