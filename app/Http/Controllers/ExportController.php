@@ -23,8 +23,8 @@ class ExportController extends Controller
      */
     public function index(Request $request)
     {
-        $instituition_id = intval($request->institution);
-        $query = Export::byInstitution($instituition_id);
+        $institution_id = intval($request->institution);
+        $query = Export::byInstitution($institution_id);
 
         $storage_ids = $request->user()->storages->pluck('id');
 
@@ -36,8 +36,8 @@ class ExportController extends Controller
         $exports = $query->orderBy('id', 'desc')->paginate(50);
 
         return view('exports.index', [
-            'exports' => $exports,
-            'institution_id' => $instituition_id,
+            'exports' => $exports->appends(['institution'=>$institution_id]),
+            'institution_id' => $institution_id,
         ]);
     }
 
