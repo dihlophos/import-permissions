@@ -24,7 +24,7 @@ class ExportController extends Controller
     public function index(Request $request)
     {
         $instituition_id = intval($request->institution);
-        $query = Export::byInstitution($instituition_id);
+        $query = Export::byInstitution($instituition_id)->with('region','institution');
 
         $storage_ids = $request->user()->storages->pluck('id');
 
@@ -161,8 +161,8 @@ class ExportController extends Controller
      */
     public function setnum(Request $request, Export $export)
     {
-        $export->permission_num = $request->permission_num;
-        $export->permission_date = $request->permission_date;
+        $export->permission_num = empty($request->permission_num)?Export::next_permission_num($export->institution_id):$request->permission_num;
+        $export->permission_date = empty($request->permission_date)?date('Y-m-d H:i:s'):$request->permission_date;
         $export->save();
         $request->session()->flash('alert-success', 'Номер разрешения назначен!');
         return redirect()->route('export.index', ['institution'=>$export->institution]);
@@ -176,7 +176,7 @@ class ExportController extends Controller
     public function permission_doc(Export $export)
     {
         $exported_products = $export->exported_products()->orderBy('id')->get();
-        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport');
+        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport', 'institution');
         $exported_products->load('processed_products', 'product_type');
         return view('exports.permission_doc', [
             'export' => $export,

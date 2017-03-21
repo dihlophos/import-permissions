@@ -33,6 +33,11 @@ class Export extends Model
                            'address',        'transport_id',    'institution_id',
                            'dest_district_id'];
 
+    public static function next_permission_num($institution_id)
+    {
+        return Export::where('institution_id', $institution_id)->max('permission_num')+1;
+    }
+
     public function exported_products()
     {
        return $this->hasMany(ExportedProduct::class);
