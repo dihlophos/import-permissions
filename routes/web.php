@@ -25,8 +25,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home','HomeController@index')->name('home');
 
-    Route::get('/export/{export}/process','ExportController@process')->name('export.process');
-
     Route::put('/export/{export}/permission_num','ExportController@setnum')->name('export.setnum');
 
     Route::get('/export/{export}/permission_doc','ExportController@permission_doc')->name('export.permission_doc');
@@ -44,6 +42,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/processed_product', 'ProcessedProductController', ['except' => [
         'create', 'show', 'edit'
     ]]);
+
+    //Individual export routes
+    Route::put('/indi_export/{indi_export}/permission_num','IndiExportController@setnum')->name('indi_export.setnum');
+
+    Route::get('/indi_export/{indi_export}/permission_doc','IndiExportController@permission_doc')->name('indi_export.permission_doc');
+
+    Route::resource('/indi_export', 'IndiExportController', ['except' => [
+        'show'
+    ]]);
+
 
     Route::group(
         ['middleware' => 'can:access-lists',

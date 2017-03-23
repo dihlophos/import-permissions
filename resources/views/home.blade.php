@@ -11,7 +11,7 @@
                     @foreach($institutions as $id=>$name)
                         <ul>
                             @if(Gate::allows('view-export',$id))
-                                <li><a href="{{route('export.index', ['institution'=>$id])}}">{{ $name }}</a></li>
+                                <li><a href="{{route('export.index', ['institution'=>$id])}}">{{ $name }}</a> | <a href="{{route('indi_export.index', ['institution'=>$id])}}">Для физ. лиц</a></li>
                             @endif
                         </ul>
                     @endforeach

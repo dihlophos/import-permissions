@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::pattern('export', '[0-9]+');
+        Route::pattern('indi_export', '[0-9]+');
         Route::pattern('institution', '[0-9]+');
         Route::pattern('organization', '[0-9]+');
         Route::pattern('storage', '[0-9]+');
@@ -38,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('district', App\Models\District::class);
         Route::model('organization', App\Models\Organization::class);
         Route::model('export', App\Models\Export::class);
+        Route::model('indi_export', App\Models\IndiExport::class);
         Route::model('exported_product', App\Models\ExportedProduct::class);
         Route::model('processed_product', App\Models\ProcessedProduct::class);
         Route::model('institution', App\Models\Institution::class);
