@@ -52,6 +52,10 @@ Route::group(['middleware' => 'auth'], function () {
         'show'
     ]]);
 
+    Route::resource('/indi_exported_product', 'IndiExportedProductController', ['except' => [
+        'create', 'show', 'edit'
+    ]]);
+
 
     Route::group(
         ['middleware' => 'can:access-lists',

@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('export', App\Models\Export::class);
         Route::model('indi_export', App\Models\IndiExport::class);
         Route::model('exported_product', App\Models\ExportedProduct::class);
+        Route::model('indi_exported_product', App\Models\IndiExportedProduct::class);
         Route::model('processed_product', App\Models\ProcessedProduct::class);
         Route::model('institution', App\Models\Institution::class);
         parent::boot();
