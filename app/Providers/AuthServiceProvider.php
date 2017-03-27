@@ -58,6 +58,17 @@ class AuthServiceProvider extends ServiceProvider
             return $user->institution->id === $institution_id;
         });
 
+        Gate::define('modify-individual-export', function ($user, $institution_id) {
+            
+            if ($user->isAdmin()) { return true; }
+
+            if ($user->roleName() === "depadmin") { return true; }
+
+            if ($user->roleName() === "instadmin") { return true; }
+
+            if ($user->roleName() === "instspec") { return (($user->institution->id === $institution_id)&&($user->allow_individual)); }
+        });
+
         Gate::define('process-export', function ($user, $institution_id) {
 
             if ($user->isAdmin()) { return true; }

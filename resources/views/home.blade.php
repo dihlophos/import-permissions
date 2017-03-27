@@ -13,8 +13,10 @@
                             @if(Gate::allows('view-export',$id))
                                 <li>
                                 	<h3>{{ $name }}</h3>
-                                	<a href="{{route('export.index', ['institution'=>$id])}}">Для юр. лиц</a> |
-                                	<a href="{{route('indi_export.index', ['institution'=>$id])}}">Для физ. лиц</a>
+                                	<a href="{{route('export.index', ['institution'=>$id])}}">Для юр. лиц</a>
+                                    @if(Gate::allows('modify-individual-export',$id))
+                                	   | <a href="{{route('indi_export.index', ['institution'=>$id])}}">Для физ. лиц</a>
+                                    @endif
                                 </li>
                             @endif
                         </ul>

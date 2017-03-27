@@ -14,11 +14,7 @@ class StoreIndiExport extends FormRequest
      */
     public function authorize()
     {
-        if (!is_null($this->permission_num) || !is_null($this->permission_date))
-        {
-            return $this->user()->can('specify-export-permission', intval($this->institution_id));
-        }
-        return $this->user()->can('modify-export', intval($this->institution_id));
+        return $this->user()->can('modify-individual-export', intval($this->institution_id));
     }
 
     /**
