@@ -59,6 +59,7 @@
                 <th>E-mail</th>
                 <th>Роль</th>
                 <th>Учреждение</th>
+                <th>Работа с физ. лицами</th>
                 <th>Удалить</th>
             </thead>
 
@@ -83,6 +84,9 @@
                         @if (!is_null($user->institution))
                             {{ $user->institution->name }}
                         @endif
+                    </td>
+                    <td class="table-text">
+                        {{ $user->allow_individual?"Да":"Нет" }}
                     </td>
                     <td>
                         <form action="{{route('user.destroy', $user->id)}}" method="POST">

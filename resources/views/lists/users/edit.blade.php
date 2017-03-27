@@ -40,6 +40,13 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="allow_individual">Работа с физ. лицами</label>
+            <select name="allow_individual" id="user-allow_individual" class="form-control">
+                <option value="0" {{ !$user->allow_individual? 'selected' : ''}}>Нет</option>
+                <option value="1" {{ $user->allow_individual? 'selected' : ''}}>Да</option>
+            </select>
+        </div>
+        <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">
         </div>
     </fieldset>
