@@ -28,6 +28,11 @@ class IndiExport extends Model
                            'address',        'transport_id',    'institution_id',
                            'dest_district_id'];
 
+    public static function next_permission_num($institution_id)
+    {
+        return IndiExport::where('institution_id', $institution_id)->max('permission_num')+1;
+    }
+
     public function indi_exported_products()
     {
        return $this->hasMany(IndiExportedProduct::class);

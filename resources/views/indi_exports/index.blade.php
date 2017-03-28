@@ -36,9 +36,6 @@
                             @can('update', $indi_export)
                                 <a href="{{route('indi_export.edit', $indi_export->id)}}" class="btn btn-primary" role="button">Редактировать</a>
                             @endcan
-                            @can('process', $indi_export)
-                                <a href="{{route('indi_export.process', $indi_export->id)}}" class="btn btn-primary" role="button">Выполнение</a>
-                            @endcan
                         </td>
                         <td class="table-text" style="width:">
                             <div style="float: left;">

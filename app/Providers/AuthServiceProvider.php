@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\ExportPolicy;
 use App\Models\Export;
+use App\Policies\IndiExportPolicy;
+use App\Models\IndiExport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         Export::class => ExportPolicy::class,
+        IndiExport::class => IndiExportPolicy::class,
     ];
 
     /**
@@ -32,12 +35,12 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->isAdmin()) { return true; }
 
             if ($user->roleName() === "depadmin") { return true; }
-            
+
             return false;
         });
 
         Gate::define('modify-export', function ($user, $institution_id) {
-            
+
             if ($user->isAdmin()) { return true; }
 
             if ($user->roleName() === "depadmin") { return true; }
@@ -59,7 +62,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('modify-individual-export', function ($user, $institution_id) {
-            
+
             if ($user->isAdmin()) { return true; }
 
             if ($user->roleName() === "depadmin") { return true; }
@@ -74,7 +77,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->isAdmin()) { return true; }
 
             if ($user->roleName() === "instspec") { return $user->institution->id === $institution_id; }
-            
+
             return false;
         });
 
