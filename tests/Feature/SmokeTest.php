@@ -6,18 +6,43 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\User;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Basic access test.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testBasicAccess()
     {
         $response = $this->get('/');
-
         $response->assertStatus(200);
+    }
+    /**
+     * Admin authorize test.
+     *
+     * @return void
+     */
+    public function testAppAdminAuthorize()
+    {
+        $user = factory(User::class, 'appadmin')->make();
+        $user->save();
+        $this->actingAs($user);
+
+        $response = $this->get('/home');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * No authorize test.
+     *
+     * @return void
+     */
+    public function testNoAuthorize()
+    {
+        $response = $this->get('/home');
+        $response->assertStatus(302);
     }
 }
