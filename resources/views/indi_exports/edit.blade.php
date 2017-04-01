@@ -135,6 +135,7 @@
         <select name="measure" id="measure" class="form-control" placeholder="груз">
             <option value="тонна">тонна</option>
             <option value="тыс.шт.">тыс.шт.</option>
+            <option value="голова">голова</option>
         </select>
     </div>
     <div class="form-group">
@@ -189,6 +190,7 @@
                                 <select name="measure" id="measure" class="form-control" placeholder="ед изм">
                                     <option value="тонна" {{$product->measure=='тонна'?'selected':''}}>тонна</option>
                                     <option value="тыс.шт." {{$product->measure=='тыс.шт.'?'selected':''}}>тыс.шт.</option>
+                                    <option value="голова" {{$product->measure=='голова'?'selected':''}}>голова</option>
                                 </select>
                             </div>
                             <div class="form-group">
