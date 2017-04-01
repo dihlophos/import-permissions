@@ -26,11 +26,38 @@ $factory->define(User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->defineAs(User::class, 'admin', function ($faker) use ($factory) {
+$factory->defineAs(User::class, 'appadmin', function ($faker) use ($factory) {
     $user = $factory->raw(User::class);
     return array_merge($user,
     	[
     		'role_id' => Role::getAppAdminRole()->id,
+    		'allow_individual' => 0,
+    	]);
+});
+
+$factory->defineAs(User::class, 'depadmin', function ($faker) use ($factory) {
+    $user = $factory->raw(User::class);
+    return array_merge($user,
+    	[
+    		'role_id' => Role::getDepAdminRole()->id,
+    		'allow_individual' => 0,
+    	]);
+});
+
+$factory->defineAs(User::class, 'instadmin', function ($faker) use ($factory) {
+    $user = $factory->raw(User::class);
+    return array_merge($user,
+    	[
+    		'role_id' => Role::getInstAdminRole()->id,
+    		'allow_individual' => 0,
+    	]);
+});
+
+$factory->defineAs(User::class, 'instspec', function ($faker) use ($factory) {
+    $user = $factory->raw(User::class);
+    return array_merge($user,
+    	[
+    		'role_id' => Role::getInstSpecRole()->id,
     		'allow_individual' => 0,
     	]);
 });

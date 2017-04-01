@@ -15,16 +15,16 @@ class ListPermissionsTest extends TestCase
 {
 	use DatabaseTransactions;
     /**
-     * A basic test example.
+     * Test appadmin access to lists.
      *
      * @return void
      */
     public function testAppAdminAccess()
     {
-    	$admin = factory(User::class, 'admin')->make();
-    	$admin->save();
+    	$user = factory(User::class, 'appadmin')->make();
+    	$user->save();
     	
-    	$this->actingAs($admin);
+    	$this->actingAs($user);
 
     	$this->get(URL::route('lists-index'))
             ->assertStatus(200);
@@ -34,7 +34,7 @@ class ListPermissionsTest extends TestCase
 
         $this->get(URL::route('organization.index'))
             ->assertStatus(200);
-                
+
         $this->get(URL::route('region.index'))
             ->assertStatus(200);
 
@@ -52,6 +52,129 @@ class ListPermissionsTest extends TestCase
 
         $this->get(URL::route('institution.index'))
             ->assertStatus(200);
+
+    }
+
+    /**
+     * Test depadmin access to lists.
+     *
+     * @return void
+     */
+    public function testDepAdminAccess()
+    {
+    	$user = factory(User::class, 'depadmin')->make();
+    	$user->save();
+    	
+    	$this->actingAs($user);
+
+    	$this->get(URL::route('lists-index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('user.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('organization.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('region.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('transport.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('purpose.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('product_type.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('storage.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('institution.index'))
+            ->assertStatus(403);
+
+    }
+
+    /**
+     * Test instadmin access to lists.
+     *
+     * @return void
+     */
+    public function testInstAdminAccess()
+    {
+    	$user = factory(User::class, 'instadmin')->make();
+    	$user->save();
+    	
+    	$this->actingAs($user);
+
+    	$this->get(URL::route('lists-index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('user.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('organization.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('region.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('transport.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('purpose.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('product_type.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('storage.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('institution.index'))
+            ->assertStatus(403);
+
+    }
+
+    /**
+     * Test instspec access to lists.
+     *
+     * @return void
+     */
+    public function testInstSpecAccess()
+    {
+    	$user = factory(User::class, 'instspec')->make();
+    	$user->save();
+    	
+    	$this->actingAs($user);
+
+    	$this->get(URL::route('lists-index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('user.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('organization.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('region.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('transport.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('purpose.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('product_type.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('storage.index'))
+            ->assertStatus(403);
+
+        $this->get(URL::route('institution.index'))
+            ->assertStatus(403);
 
     }
 }
