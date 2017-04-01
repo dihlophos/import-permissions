@@ -17,4 +17,24 @@ class Role extends Model
 	{
 		return $this->hasMany(User::class);
 	}
+
+    public static function getAppAdminRole()
+    {
+        return Role::where('internal_name', '=', 'appadmin')->firstOrFail();
+    }
+
+    public static function getDepAdminRole()
+    {
+        return Role::where('internal_name', '=', 'depadmin')->firstOrFail();
+    }
+
+    public static function getInstAdminRole()
+    {
+        return Role::where('internal_name', '=', 'instadmin')->firstOrFail();
+    }
+
+    public static function getInstSpecRole()
+    {
+        return Role::where('internal_name', '=', 'instspec')->firstOrFail();
+    }
 }
