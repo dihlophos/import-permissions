@@ -2,6 +2,8 @@
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Region;
+use App\Models\Institution;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -23,6 +25,15 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(Institution::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => str_random(10),
+        'index' => rand(0,99),
+        'region_id' => Region::firstOrFail()->id,
     ];
 });
 

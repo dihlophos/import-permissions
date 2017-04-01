@@ -6,7 +6,6 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
 

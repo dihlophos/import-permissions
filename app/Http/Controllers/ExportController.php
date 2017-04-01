@@ -13,6 +13,7 @@ use App\Models\Transport;
 use App\Models\ProductType;
 use App\Http\Requests\StoreExport;
 use Illuminate\Http\Request;
+use Gate;
 
 class ExportController extends Controller
 {
@@ -24,6 +25,12 @@ class ExportController extends Controller
     public function index(Request $request)
     {
         $institution_id = intval($request->institution);
+
+        if ($request->user()->cannot('view-export', $institution_id))
+        {
+            return response('Нет доступа к учреждению', 403);
+        }
+
         $query = Export::byInstitution($institution_id)->with('region','institution');
 
         $storage_ids = $request->user()->storages->pluck('id');
