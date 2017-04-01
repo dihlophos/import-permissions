@@ -47,7 +47,7 @@ class IndiExportedProductController extends Controller
      * @param  \App\Models\IndiExportedProduct  $indiExportedProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(IndiExportedProduct $indiExportedProduct)
+    public function show(IndiExportedProduct $indi_exported_product)
     {
         //
     }
@@ -58,7 +58,7 @@ class IndiExportedProductController extends Controller
      * @param  \App\Models\IndiExportedProduct  $indiExportedProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(IndiExportedProduct $indiExportedProduct)
+    public function edit(IndiExportedProduct $indi_exported_product)
     {
         //
     }
@@ -70,11 +70,11 @@ class IndiExportedProductController extends Controller
      * @param  \App\Models\IndiExportedProduct  $indiExportedProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreIndiExportedProduct $request, IndiExportedProduct $indiExportedProduct)
+    public function update(StoreIndiExportedProduct $request, IndiExportedProduct $indi_exported_product)
     {
-        $indiExportedProduct->fill($request->all())->save();
+        $indi_exported_product->fill($request->all())->save();
         $request->session()->flash('alert-success', 'Запись успешно обновлена!');
-        return redirect()->route('indi_export.edit', $indiExportedProduct->indi_export_id );
+        return redirect()->route('indi_export.edit', $indi_exported_product->indi_export_id );
     }
 
     /**
@@ -83,10 +83,10 @@ class IndiExportedProductController extends Controller
      * @param  \App\Models\IndiExportedProduct  $indiExportedProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, IndiExportedProduct $indiExportedProduct)
+    public function destroy(Request $request, IndiExportedProduct $indi_exported_product)
     {
-        $indiExportedProduct->delete();
+        $indi_exported_product->delete();
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
-        return redirect()->route('indi_export.edit', $indiExportedProduct->indi_export_id );
+        return redirect()->route('indi_export.edit', $indi_exported_product->indi_export_id );
     }
 }
