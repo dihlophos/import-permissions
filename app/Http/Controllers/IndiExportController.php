@@ -159,7 +159,7 @@ class IndiExportController extends Controller
     {
         $indi_exported_products = $indi_export->indi_exported_products()->orderBy('id')->get();
         $indi_export->load('storage', 'purpose', 'region', 'district', 'transport', 'institution');
-        $indi_exported_products->load('processed_products', 'product_type');
+        $indi_exported_products->load('product_type');
         return view('indi_exports.permission_doc', [
             'indi_export' => $indi_export,
             'indi_exported_products' => $indi_exported_products

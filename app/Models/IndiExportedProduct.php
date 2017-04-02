@@ -28,8 +28,4 @@ class IndiExportedProduct extends Model
     {
        return $this->belongsTo(ProductType::class);
     }
-
-    public function processed_products() {
-        return $this->hasMany(ProcessedProduct::class);
-    }
 }
