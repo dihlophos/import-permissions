@@ -5,7 +5,7 @@ use PhpOffice\PhpWord\IOFactory;
 
 try{
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $path = resource_path('views/documents/Разрешение на вывоз.docx');
+    $path = resource_path('views/documents/indi_permission_doc.docx');
     $document = $phpWord->loadTemplate($path);
     $document->setValue('exports_permission_date', date_format(date_create($indi_export->permission_date),'d.m.Y'));
     $document->setValue('exports_permission_num', empty($indi_export->permission_num)?'':$indi_export->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num);
@@ -13,8 +13,7 @@ try{
     $document->setValue('exports_request_num', $indi_export->request_num);
     $document->setValue('institution_name', 'Главное управление "Государственная инспекция по ветеринарии" Тверской области');
     $document->setValue('currdate', date('Y'));
-    $document->setValue('organization_name', $indi_export->individual);
-    $document->setValue('organization_tin', ''); //TODO: Where to find tin?
+    $document->setValue('individual', $indi_export->individual);
     $document->setValue('storage_name', $indi_export->storage->name);
     $document->setValue('storage_address', $indi_export->storage->address);
     $document->setValue('purpose_name', $indi_export->purpose->name);

@@ -5,7 +5,7 @@ use PhpOffice\PhpWord\IOFactory;
 
 try{
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $path = resource_path('views/documents/Разрешение на вывоз.docx');
+    $path = resource_path('views/documents/permission_doc.docx');
     $document = $phpWord->loadTemplate($path);
     $document->setValue('exports_permission_date', date_format(date_create($export->permission_date),'d.m.Y'));
     $document->setValue('exports_permission_num', empty($export->permission_num)?'':$export->region->index.'-'.$export->institution->index.'-'.$export->permission_num);
