@@ -16,6 +16,7 @@
                <li><a href="{{ route('product_type.index') }}">Виды грузов</a></li>
                <li><a href="{{ route('storage.index') }}">Базы хранения</a></li>
                <li><a href="{{ route('institution.index') }}">Учреждения</a></li>
+               <li><a href="{{ route('organ.index') }}">Управления</a></li>
             </ul>
         </div>
     </div>
