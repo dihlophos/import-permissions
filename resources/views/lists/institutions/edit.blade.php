@@ -31,6 +31,14 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group required">
+            <label for="institution-organ_id">Управление</label>
+            <select name="organ_id" id="institution-organ_id" class="form-control">
+                @foreach ($organs as $id => $organ)
+                    <option value="{{$id}}" {{$institution->organ_id == $id ? 'selected' : ''}}>{{$organ}}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="form-group">
             <input class="btn btn-default" type="submit" value="Сохранить">
         </div>

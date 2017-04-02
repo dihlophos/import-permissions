@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Region;
+use App\Models\Organ;
 use App\Models\District;
 use App\Http\Requests\StoreInstitution;
 
@@ -19,9 +20,11 @@ class InstitutionController extends Controller
     {
         $institutions = Institution::orderBy('name', 'asc')->paginate(50);
         $regions = Region::orderBy('name')->pluck('name', 'id');
+        $organs = Organ::orderBy('name')->pluck('name', 'id');
         return view('lists.institutions.index', [
             'institutions' => $institutions,
-            'regions' => $regions
+            'regions' => $regions,
+            'organs' => $organs
         ]);
     }
 
@@ -69,9 +72,11 @@ class InstitutionController extends Controller
     {
         $institution->load('districts');
         $regions = Region::orderBy('name')->pluck('name', 'id');
+        $organs = Organ::orderBy('name')->pluck('name', 'id');
         return view('lists.institutions.edit', [
             'institution' => $institution,
-            'regions' => $regions
+            'regions' => $regions,
+            'organs' => $organs
         ]);
     }
 

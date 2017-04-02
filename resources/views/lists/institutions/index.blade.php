@@ -9,7 +9,7 @@
         {{ csrf_field() }}
         <div class="form-group required">
             <input name="name" id="institution-name" class="form-control" placeholder="Название..."
-                   maxlength="255" type="text" style="width:600px">
+                   maxlength="255" type="text" style="width:300px">
         </div>
         <div class="form-group required">
             <input name="index" id="institution-index" class="form-control" placeholder="Индекс..."
@@ -19,6 +19,13 @@
             <select name="region_id" id="institution-region_id" class="form-control">
                 @foreach ($regions as $id => $region)
                     <option value="{{$id}}">{{$region}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group required">
+            <select name="organ_id" id="institution-organ_id" class="form-control">
+                @foreach ($organs as $id => $organ)
+                    <option value="{{$id}}">{{$organ}}</option>
                 @endforeach
             </select>
         </div>
@@ -57,7 +64,7 @@
                                 <input name="name" class="form-control" value="{{ $institution->name }}" maxlength="255" type="text" style="width:300px">
                             </div>
                             <div class="form-group required">
-                                <input name="index" class="form-control" value="{{ $institution->index }}" maxlength="2" type="text" style="width:100px">
+                                <input name="index" class="form-control" value="{{ $institution->index }}" maxlength="2" type="text" style="width:50px">
                             </div>
                             <div class="form-group required">
                                 <select name="region_id" id="institution-region_id" class="form-control">
@@ -66,9 +73,16 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group required">
+                                <select name="organ_id" id="institution-organ_id" class="form-control">
+                                    @foreach ($organs as $id => $organ)
+                                        <option value="{{$id}}" {{$institution->organ_id == $id ? 'selected' : ''}}>{{$organ}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </form>
@@ -80,7 +94,6 @@
 
                             <button class="btn btn-primary">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                Удалить
                             </button>
                         </form>
                     </td>

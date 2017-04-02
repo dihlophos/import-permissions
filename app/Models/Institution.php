@@ -18,11 +18,16 @@ class Institution extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'region_id', 'index'];
+    protected $fillable = ['name', 'region_id', 'index', 'organ_id'];
 
     public function region()
     {
         return $this->belongsTo(Region::class);
+    }
+
+    public function organ()
+    {
+        return $this->belongsTo(Organ::class);
     }
 
     public function districts()
