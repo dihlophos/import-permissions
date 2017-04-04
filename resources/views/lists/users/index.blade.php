@@ -37,6 +37,7 @@
                 @endforeach
             </select>
         </div>
+        <input name="allow_individual" type="hidden" value="0"/>
         <br/>
         <button type="submit" class="btn btn-primary" style="margin-top: 10px">
             <i class="fa fa-plus" aria-hidden="true"></i> Добавить
