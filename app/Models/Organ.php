@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 	Поля:
 		Название
+        Должность руководителя
+        И. О. Фамилия руководителя
+        Регион
 */
 class Organ extends Model
 {
@@ -17,10 +20,15 @@ class Organ extends Model
     *
     * @var array
     */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'head_job', 'head_name', 'region_id'];
 
     public function institutions()
     {
         return $this->hasMany(Institution::class);
+    }
+
+    public function regions()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Organ;
+use App\Models\Region;
 use App\Http\Requests\StoreOrgan;
 
 class OrganController extends Controller
@@ -16,9 +17,10 @@ class OrganController extends Controller
     public function index()
     {
         $organs = Organ::orderBy('name')->paginate(50);
-
+        $regions = Region::orderBy('name')->pluck('name', 'id');
         return view('lists.organs.index', [
             'organs' => $organs,
+            'regions' => $regions
         ]);
     }
 

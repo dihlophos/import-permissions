@@ -24,7 +24,9 @@ class StoreOrgan extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255|unique:organs,name,'.($this->organ?$this->organ->id:0)
+            'name' => 'required|max:255|unique:organs,name,'.($this->organ?$this->organ->id:0),
+            'head_name' => 'required|max:150',
+            'head_job' => 'required|max:150'
         ];
     }
 
@@ -32,6 +34,8 @@ class StoreOrgan extends FormRequest
     {
         return [
             'name.required' => 'Не указано название',
+            'head_name.required' => 'Не указано И. О. Фамилия руководителя',
+            'head_job.required' => 'Не указана должность руководителя',
         ];
     }
 }
