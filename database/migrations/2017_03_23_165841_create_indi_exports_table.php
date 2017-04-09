@@ -16,7 +16,7 @@ class CreateIndiExportsTable extends Migration
         Schema::create('indi_exports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('institution_id')->index();
-            $table->integer('storage_id')->index();
+            $table->integer('storage_id')->index()->unsigned();
             $table->string('individual', 150);
             $table->date('permission_date')->nullable();
             $table->string('permission_num', 10)->nullable();

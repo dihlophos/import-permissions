@@ -15,7 +15,7 @@ class CreateExportsTable extends Migration
     {
         Schema::create('exports', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('storage_id')->index();
+            $table->integer('storage_id')->index()->unsigned();
             $table->integer('organization_id')->index();
             $table->date('permission_date')->nullable();
             $table->string('permission_num', 10)->nullable();

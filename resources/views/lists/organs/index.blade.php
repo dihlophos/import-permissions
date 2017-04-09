@@ -68,7 +68,7 @@
                         <div class="form-group required">
                             <select name="region_id" id="organ-region_id" class="form-control"  style="width:250px">
                                 @foreach ($regions as $id => $region)
-                                    <option value="{{$id}}">{{$region}}</option>
+                                    <option value="{{$id}}" {{$organ->region_id == $id ? 'selected' : ''}}>{{$region}}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -79,7 +79,6 @@
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-primary">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        Удалить
                                     </button>
                                 </form>
                             @endcan

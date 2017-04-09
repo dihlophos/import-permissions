@@ -14,7 +14,7 @@ class AddDistrictIdToStorage extends Migration
     public function up()
     {
         Schema::table('storages', function (Blueprint $table) {
-            $table->integer('district_id')->index();
+            $table->integer('district_id')->index()->unsigned();
         });
     }
 
