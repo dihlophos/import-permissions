@@ -36,10 +36,12 @@ class InstitutionController extends Controller
      */
     public function users(Institution $institution)
     {
-        $users = $institution->users()->get()->load('storages');
-        $storages = $institution->storages()->get();
+        $users = $institution->users()->orderBy('displayname', 'asc')->paginate(50);
+        $users->load('storages');
+        $storages = $institution->storages()->pluck('name', 'id');
         return view('lists.institutions.users', [
             'institution' => $institution,
+            'users' => $users,
             'storages' => $storages
         ]);
     }
