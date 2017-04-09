@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Institution extends Model
 {
@@ -37,11 +38,18 @@ class Institution extends Model
 
     public function exports()
     {
-        return $this->hasMany(District::class);
+        return $this->hasMany(Export::class);
     }
 
     public function users()
     {
-        return $this->hasMany(Institution::class);
+        return $this->hasMany(User::class);
+    }
+
+    public function storages()
+    {
+        return DB::table('storages')
+                    ->whereRaw('district_id IN (select di.district_id from district_institution di where di.institution_id='.$this->id.')')
+                    ->orderBy('name');
     }
 }

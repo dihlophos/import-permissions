@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/export/{export}/process','ExportController@process')->name('export.process')->middleware('can:process,export');
 
+    Route::get('/institution/{institution}/users','InstitutionController@users')->name('institution.users');
+
     Route::resource('/export', 'ExportController', ['except' => [
         'show'
     ]]);

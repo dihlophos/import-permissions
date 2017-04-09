@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Organ;
 use App\Models\District;
 use App\Http\Requests\StoreInstitution;
+use Illuminate\Support\Facades\DB;
 
 class InstitutionController extends Controller
 {
@@ -25,6 +26,21 @@ class InstitutionController extends Controller
             'institutions' => $institutions,
             'regions' => $regions,
             'organs' => $organs
+        ]);
+    }
+
+    /**
+     * Display a listing of institution users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function users(Institution $institution)
+    {
+        $users = $institution->users()->get()->load('storages');
+        $storages = $institution->storages()->get();
+        return view('lists.institutions.users', [
+            'institution' => $institution,
+            'storages' => $storages
         ]);
     }
 
