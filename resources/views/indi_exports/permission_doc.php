@@ -8,7 +8,7 @@ try{
     $path = resource_path('views/documents/indi_permission_doc.docx');
     $document = $phpWord->loadTemplate($path);
     $document->setValue('exports_permission_date', date_format(date_create($indi_export->permission_date),'d.m.Y'));
-    $document->setValue('exports_permission_num', empty($indi_export->permission_num)?'':$indi_export->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num);
+    $document->setValue('exports_permission_num', empty($indi_export->permission_num)?'':$indi_export->institution->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num);
     $document->setValue('exports_request_date', date_format(date_create($indi_export->request_date),'d.m.Y'));
     $document->setValue('exports_request_num', $indi_export->request_num);
     $document->setValue('institution_name', 'Главное управление "Государственная инспекция по ветеринарии" Тверской области');

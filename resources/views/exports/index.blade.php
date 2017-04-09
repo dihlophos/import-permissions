@@ -43,7 +43,7 @@
                         <td class="table-text" style="width:">
                             <div style="float: left;">
                                 от <u>{{empty($export->permission_date)?str_repeat('&nbsp;',20):$export->permission_date}}</u>
-                                № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->region->index.'-'.$export->institution->index.'-'.$export->permission_num}}</u>
+                                № <u>{{empty($export->permission_num)?str_repeat('&nbsp;', 6):$export->institution->region->index.'-'.$export->institution->index.'-'.$export->permission_num}}</u>
                             </div>
                             <div style="float: right; padding-left:10px">
                                 @can('specifyPermission', $export)

@@ -40,7 +40,7 @@
                         <td class="table-text" style="width:">
                             <div style="float: left;">
                                 от <u>{{empty($indi_export->permission_date)?str_repeat('&nbsp;',20):$indi_export->permission_date}}</u>
-                                № <u>{{empty($indi_export->permission_num)?str_repeat('&nbsp;', 6):$indi_export->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num}}</u>
+                                № <u>{{empty($indi_export->permission_num)?str_repeat('&nbsp;', 6):$indi_export->institution->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num}}</u>
                             </div>
                             <div style="float: right; padding-left:10px">
                                 @can('specifyPermission', $indi_export)
