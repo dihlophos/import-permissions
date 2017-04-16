@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Gate;
 use App\Policies\ExportPolicy;
 use App\Models\Export;
 use App\Policies\IndiExportPolicy;
+use App\Policies\InstitutionPolicy;
 use App\Models\IndiExport;
+use App\Models\Institution;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
         Export::class => ExportPolicy::class,
         IndiExport::class => IndiExportPolicy::class,
+        Institution::class => InstitutionPolicy::class,
     ];
 
     /**
