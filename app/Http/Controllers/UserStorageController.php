@@ -8,6 +8,17 @@ use App\Models\Storage;
 
 class UserStorageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $curentUser = $request->user();
+            $editedUser = $request->user;
+            if ($curentUser->isAdmin()) return true;
+            if ($curentUser->roleName() === "instspec") { return false; }
+            if (($curentUser->roleName() === "instadmin") && ($curentUser->institution->id !== $editedUser->institution->id)) { return false; }
+            return $next($request);
+        });
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -18,7 +29,7 @@ class UserStorageController extends Controller
     {
         $user->storages()->attach($request->storage_id);
         $request->session()->flash('alert-success', 'Запись успешно добавлена!');
-        return redirect()->route('user.edit', $user->id);
+        return redirect($request->headers->get('referer'));
     }
 
     /**
@@ -31,6 +42,6 @@ class UserStorageController extends Controller
     {
         $user->storages()->detach($storage->id);
         $request->session()->flash('alert-success', 'Запись успешно удалена!');
-        return redirect()->route('user.edit', $user->id);
+        return redirect($request->headers->get('referer'));
     }
 }
