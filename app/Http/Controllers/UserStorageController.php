@@ -13,9 +13,10 @@ class UserStorageController extends Controller
         $this->middleware(function ($request, $next) {
             $curentUser = $request->user();
             $editedUser = $request->user;
-            if ($curentUser->isAdmin()) return true;
+            if ($curentUser->isAdmin()) return $next($request);
             if ($curentUser->roleName() === "instspec") { return false; }
-            if (($curentUser->roleName() === "instadmin") && ($curentUser->institution->id !== $editedUser->institution->id)) { return false; }
+            if (($curentUser->roleName() === "instadmin") && ($curentUser->institution->id !== $editedUser->institution_id)) { return false; }
+
             return $next($request);
         });
     }
