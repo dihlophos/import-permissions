@@ -16,38 +16,43 @@
 
       <div class="panel-body">
         {{$users->links()}}
-        <table class="table table-striped">
+            <div class="row">
+                <div class="col-md-2"><b>ФИО</b></div>
+                <div class="col-md-2"><b>Роль</b></div>
+                <div class="col-md-8"><b>Базы хранения</b></div>
+            </div>
 
-            <thead>
-                <th style="width:150px">ФИО</th>
-                <th style="width:150px">Роль</th>
-                <th>Базы хранения</th>
-            </thead>
-
-            <tbody>
             @forelse ($users as $user)
-                <tr>
-                    <td class="table-text">
-                        {{ $user->displayname }}
-                    </td>
-                    <td class="table-text">
-                        @if (!is_null($user->role))
-                            {{ $user->role->name }}
-                        @endif
-                    </td>
-                    <td>
-                        <select multiple name="storage[]">
-                            @foreach ($storages as $id => $storage)
-                            <option {{$user->storages->contains('id', $id) ? 'selected' : ''}} value="{{$id}}">{{$storage}}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ $user->displayname }}
+                </div>
+                <div class="col-md-2">
+                    @if (!is_null($user->role))
+                        {{ $user->role->name }}
+                    @endif
+                </div>
+                <form action="{{route('user.storage.update', $user->id)}}" method="POST" id="UserStorageForm" accept-charset="utf-8">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+                <div class="col-md-7">
+                    <select multiple name="storage[]">
+                        @foreach ($storages as $id => $storage)
+                        <option {{$user->storages->contains('id', $id) ? 'selected' : ''}} value="{{$id}}">{{$storage}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary" style="width:100%">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+                </form>
             @empty
                 Нет пользователей О_о
             @endforelse
-            </tbody>
-        </table>
         {{$users->links()}}
       </div>
     </div>

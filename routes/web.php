@@ -58,6 +58,11 @@ Route::group(['middleware' => 'auth'], function () {
         'create', 'show', 'edit'
     ]]);
 
+    Route::resource('user.storage', 'UserStorageController', ['except' => [
+        'create', 'show', 'edit', 'update', 'index'
+    ]]);
+
+    Route::put('/user/{user}/storage', 'UserStorageController@update')->name('user.storage.update');
 
     Route::group(
         ['middleware' => 'can:access-lists',
@@ -98,9 +103,6 @@ Route::group(['middleware' => 'auth'], function () {
                 'create', 'show', 'edit', 'update', 'index'
             ]]);
             Route::resource('organization.storage', 'OrganizationStorageController', ['except' => [
-                'create', 'show', 'edit', 'update', 'index'
-            ]]);
-            Route::resource('user.storage', 'UserStorageController', ['except' => [
                 'create', 'show', 'edit', 'update', 'index'
             ]]);
         }

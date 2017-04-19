@@ -34,6 +34,21 @@ class UserStorageController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        //dd($request->storage);
+        $user->storages()->sync($request->storage);
+        $request->session()->flash('alert-success', 'Запись успешно обновлена!');
+        return redirect($request->headers->get('referer'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
