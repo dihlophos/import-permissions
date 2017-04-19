@@ -17,6 +17,7 @@
                                     @if(Gate::allows('modify-individual-export',$id))
                                 	   | <a href="{{route('indi_export.index', ['institution'=>$id])}}">Для физ. лиц</a>
                                     @endif
+                                       | <a href="{{route('institution.users', $id)}}">Сотрудники</a>
                                 </li>
                             @endif
                         </ul>
