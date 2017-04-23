@@ -38,7 +38,7 @@
                 <div class="col-md-7">
                     <select multiple name="storage[]">
                         @foreach ($storages as $id => $storage)
-                        <option {{$user->storages->contains('id', $id) ? 'selected' : ''}} value="{{$id}}">{{$storage}}</option>
+                            <option {{$user->storages->contains('id', $id) ? 'selected' : ''}} value="{{$id}}">{{$storage}}</option>
                         @endforeach
                     </select>
                 </div>

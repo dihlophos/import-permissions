@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -53,6 +54,12 @@ class User extends Authenticatable
 	{
 		return $this->belongsToMany(Storage::class);
 	}
+
+    public function scopeWithRole($query, $roleInternalName)
+    {
+        $role_id = Role::where("internal_name", "=", $roleInternalName)->firstOrFail()->id;
+        return $query->where('role_id', '=', $role_id);
+    }
 
     public function scopeByUserName($query, $username)
     {
