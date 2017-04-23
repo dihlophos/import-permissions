@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $institutions = Institution::orderBy('name')->pluck('name', 'id');
+        $institutions = Institution::orderBy('name')->get();
         return view('home', ['institutions'=>$institutions]);
     }
 }

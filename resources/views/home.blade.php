@@ -8,16 +8,18 @@
                 <div class="panel-heading">Учреждения ветеринарной службы региона</div>
 
                 <div class="panel-body">
-                    @foreach($institutions as $id=>$name)
+                    @foreach($institutions as $institution)
                         <ul>
-                            @if(Gate::allows('view-export',$id))
+                            @if(Gate::allows('view-export',$institution->id))
                                 <li>
-                                	<h3>{{ $name }}</h3>
-                                	<a href="{{route('export.index', ['institution'=>$id])}}">Для юр. лиц</a>
-                                    @if(Gate::allows('modify-individual-export',$id))
-                                	   | <a href="{{route('indi_export.index', ['institution'=>$id])}}">Для физ. лиц</a>
+                                	<h3>{{ $institution->name }}</h3>
+                                	<a href="{{route('export.index', ['institution'=>$institution->id])}}">Для юр. лиц</a>
+                                    @if(Gate::allows('modify-individual-export',$institution->id))
+                                	   | <a href="{{route('indi_export.index', ['institution'=>$institution->id])}}">Для физ. лиц</a>
                                     @endif
-                                       | <a href="{{route('institution.users', $id)}}">Сотрудники</a>
+                                    @can('attachUsersToStorages', $institution)
+                                       | <a href="{{route('institution.users', $institution->id)}}">Сотрудники</a>
+                                    @endcan
                                 </li>
                             @endif
                         </ul>
