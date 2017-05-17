@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Institution;
+use App\Models\Organ;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Storage;
@@ -21,11 +22,12 @@ class UserController extends Controller
     {
         $users = User::orderBy('displayname')->paginate(50);
         $institutions = Institution::orderBy('name', 'asc')->pluck('name', 'id');
+        $organs = Organ::orderBy('name', 'asc')->pluck('name', 'id');
         $roles = Role::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('lists.users.index',
-            compact('users', 'institutions', 'roles')
-            );
+            compact('users', 'institutions', 'organs', 'roles')
+        );
     }
 
     /**
@@ -37,7 +39,7 @@ class UserController extends Controller
     public function store(StoreUser $request)
     {
         $request->offsetSet('password', Hash::make($request->password));
-        $institution = User::create($request->all());
+        $user = User::create($request->all());
         $request->session()->flash('alert-success', 'Запись успешно добавлена!');
         return redirect()->route('user.index');
     }
@@ -53,9 +55,12 @@ class UserController extends Controller
         $user->load('storages');
         $storages = Storage::orderBy('name')->pluck('name', 'id');
         $institutions = Institution::orderBy('name', 'asc')->pluck('name', 'id');
+        $organs = Organ::orderBy('name', 'asc')->pluck('name', 'id');
         $roles = Role::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('lists.users.edit', compact('user', 'institutions', 'roles', 'storages'));
+        return view('lists.users.edit', compact(
+            'user', 'institutions', 'organs', 'roles', 'storages')
+        );
     }
 
     /**

@@ -31,6 +31,13 @@
             </select>
         </div>
         <div class="form-group">
+            <select name="organ_id" id="user-organ_id" class="form-control">
+                @foreach ($organs as $id => $organ)
+                    <option value="{{$id}}">{{$organ}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <select name="institution_id" id="user-institution_id" class="form-control">
                 @foreach ($institutions as $id => $institution)
                     <option value="{{$id}}">{{$institution}}</option>
@@ -59,6 +66,7 @@
                 <th>ФИО</th>
                 <th>E-mail</th>
                 <th>Роль</th>
+                <th>Управление</th>
                 <th>Учреждение</th>
                 <th>Работа с физ. лицами</th>
                 <th>Удалить</th>
@@ -82,6 +90,11 @@
                         @endif
                     </td>
                     <td class="table-text">
+                        @if (!is_null($user->organ))
+                            {{ $user->organ->name }}
+                        @endif
+                    </td>
+                    <td class="table-text">
                         @if (!is_null($user->institution))
                             {{ $user->institution->name }}
                         @endif
@@ -96,7 +109,6 @@
 
                             <button class="btn btn-primary">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                Удалить
                             </button>
                         </form>
                     </td>

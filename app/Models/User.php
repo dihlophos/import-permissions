@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username', 'displayname', 'email',
         'password', 'role_id', 'institution_id',
-        'allow_individual'
+        'organ_id', 'allow_individual'
     ];
 
     /**
@@ -38,6 +38,11 @@ class User extends Authenticatable
     public function institution()
     {
         return $this->belongsTo(Institution::class);
+    }
+
+    public function organ()
+    {
+        return $this->belongsTo(Organ::class);
     }
 
     public function roleName()

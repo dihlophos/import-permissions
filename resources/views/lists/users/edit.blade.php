@@ -32,6 +32,14 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="user-organ_id">Управление</label>
+            <select name="organ_id" id="user-organ_id" class="form-control">
+                @foreach ($organs as $id => $organ)
+                    <option value="{{$id}}" {{$user->organ_id == $id ? 'selected' : ''}}>{{$organ}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="user-institution_id">Учреждение</label>
             <select name="institution_id" id="user-institution_id" class="form-control">
                 @foreach ($institutions as $id => $institution)
