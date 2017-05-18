@@ -35,18 +35,31 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('specify-export-permission', function ($user, $institution_id) {
-            if ($user->isAdmin()) { return true; }
 
-            if ($user->roleName() === "depadmin") { return true; }
+            if ($user->isAdmin())
+            { 
+            	return true;
+            }
+
+            if ($user->roleName() === "depadmin") 
+            {
+            	return $user->organ->institutions->contains($institution_id);
+        	}
 
             return false;
         });
 
         Gate::define('modify-export', function ($user, $institution_id) {
 
-            if ($user->isAdmin()) { return true; }
+            if ($user->isAdmin())
+            { 
+            	return true;
+            }
 
-            if ($user->roleName() === "depadmin") { return true; }
+            if ($user->roleName() === "depadmin") 
+            {
+            	return $user->organ->institutions->contains($institution_id);
+        	}
 
             if ($user->roleName() === "instadmin")
             {
@@ -57,27 +70,56 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-export', function ($user, $institution_id) {
-            if ($user->isAdmin()) { return true; }
 
-            if ($user->roleName() === "depadmin") { return true; }
+            if ($user->isAdmin())
+            { 
+            	return true;
+            }
 
-            return $user->institution->id === $institution_id;
+            if ($user->roleName() === "depadmin") 
+            {
+            	return $user->organ->institutions->contains($institution_id);
+        	}
+
+        	if ($user->roleName() === "instadmin") 
+            {
+            	return $user->institution->id === $institution_id;
+        	}
+
+        	if ($user->roleName() === "instspec") 
+            {
+            	return $user->institution->id === $institution_id;
+        	}
         });
 
         Gate::define('modify-individual-export', function ($user, $institution_id) {
 
-            if ($user->isAdmin()) { return true; }
+            if ($user->isAdmin())
+            { 
+            	return true;
+            }
 
-            if ($user->roleName() === "depadmin") { return true; }
+            if ($user->roleName() === "depadmin") 
+            {
+            	return $user->organ->institutions->contains($institution_id);
+        	}
 
-            if ($user->roleName() === "instadmin") { return true; }
+            if ($user->roleName() === "instadmin") 
+            {
+            	return $user->institution->id === $institution_id;
+        	}
 
-            if ($user->roleName() === "instspec") { return (($user->institution->id === $institution_id)&&($user->allow_individual)); }
+            if ($user->roleName() === "instspec") 
+            {
+            	return (($user->institution->id === $institution_id) && ($user->allow_individual)); 
+            }
         });
 
         Gate::define('process-export', function ($user, $institution_id) {
-
-            if ($user->isAdmin()) { return true; }
+			if ($user->isAdmin())
+            { 
+            	return true;
+            }
 
             if ($user->roleName() === "instspec") { return $user->institution->id === $institution_id; }
 

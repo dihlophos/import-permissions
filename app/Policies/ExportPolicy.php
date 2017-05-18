@@ -20,7 +20,6 @@ class ExportPolicy
      */
     public function view(User $user, Export $export)
     {
-        if (Gate::denies('view-export', $export->institution_id)) { return false; }
 
         if ($user->RoleName() === "instspec")
         {
@@ -30,7 +29,7 @@ class ExportPolicy
             }
         }
 
-        return true;
+        return Gate::allows('view-export', $export->institution_id);
     }
 
     /**
@@ -42,8 +41,6 @@ class ExportPolicy
      */
     public function update(User $user, Export $export)
     {
-        if (Gate::denies('modify-export', $export->institution_id)) { return false; }
-
         if ($user->RoleName() === "instadmin")
         {
             if ($export->permissionSpecified())
@@ -52,7 +49,7 @@ class ExportPolicy
             }
         }
 
-        return true;
+        return Gate::allows('modify-export', $export->institution_id);
     }
 
     /**
@@ -64,8 +61,6 @@ class ExportPolicy
      */
     public function process(User $user, Export $export)
     {
-        if (Gate::denies('process-export', $export->institution_id)) { return false; }
-
         if ($user->RoleName() === "instspec")
         {
             if (!$export->permissionSpecified())
@@ -74,7 +69,7 @@ class ExportPolicy
             }
         }
 
-        return true;
+        return Gate::allows('process-export', $export->institution_id);
     }
 
     /**
@@ -86,8 +81,6 @@ class ExportPolicy
      */
     public function specifyPermission(User $user, Export $export)
     {
-        if (Gate::denies('specify-export-permission', $export->institution_id)) { return false; }
-
-        return true;
+        return Gate::allows('specify-export-permission', $export->institution_id);
     }
 }

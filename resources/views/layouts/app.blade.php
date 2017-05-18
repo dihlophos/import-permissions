@@ -65,6 +65,9 @@
                                             @if(Auth::user()->RoleName() == "instspec" || Auth::user()->RoleName() == "instadmin")
                                                 {{ Auth::user()->institution->name }}
                                             @endif
+                                            @if(Auth::user()->RoleName() == "depadmin")
+                                                {{ Auth::user()->organ->name }}
+                                            @endif
                                         ) <span class="caret"></span>
                                 </a>
 

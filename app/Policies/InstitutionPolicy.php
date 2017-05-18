@@ -20,10 +20,21 @@ class InstitutionPolicy
      */
     public function attachUsersToStorages(User $user, Institution $institution)
     {
-        if ($user->RoleName() === "instspec") { return false; }
+        if ($user->isAdmin()) 
+        { 
+            return true; 
+        }
 
-        if (($user->RoleName() === "instadmin") && ($user->institution->id !== $institution->id)) { return false; }
+        if ($user->RoleName() === "depadmin")
+        { 
+            return $user->organ->institutions->contains($institution->id);
+        }
 
-        return true;
+        if ($user->RoleName() === "instadmin")
+        { 
+            return $user->institution->id === $institution->id;
+        }
+
+        return false;
     }
 }
