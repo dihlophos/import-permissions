@@ -158,7 +158,7 @@ class IndiExportController extends Controller
     public function permission_doc(IndiExport $indi_export)
     {
         $indi_exported_products = $indi_export->indi_exported_products()->orderBy('id')->get();
-        $indi_export->load('storage', 'purpose', 'region', 'district', 'transport', 'institution');
+        $indi_export->load('storage', 'purpose', 'region', 'district', 'transport', 'institution', 'institution.organ');
         $indi_exported_products->load('product_type');
         return view('indi_exports.permission_doc', [
             'indi_export' => $indi_export,

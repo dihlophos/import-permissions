@@ -11,7 +11,7 @@ try{
     $document->setValue('exports_permission_num', empty($indi_export->permission_num)?'':$indi_export->institution->region->index.'-'.$indi_export->institution->index.'-'.$indi_export->permission_num);
     $document->setValue('exports_request_date', date_format(date_create($indi_export->request_date),'d.m.Y'));
     $document->setValue('exports_request_num', $indi_export->request_num);
-    $document->setValue('institution_name', 'Главное управление "Государственная инспекция по ветеринарии" Тверской области');
+    $document->setValue('organ_name', $indi_export->institution->organ->name);
     $document->setValue('currdate', date('Y'));
     $document->setValue('individual', $indi_export->individual);
     $document->setValue('storage_name', $indi_export->storage->name);
@@ -20,6 +20,9 @@ try{
     $document->setValue('district_name', $indi_export->district->name);
     $document->setValue('region_name', $indi_export->region->name);
     $document->setValue('transport_name', $indi_export->transport->name);
+    $document->setValue('organ_head_job', $indi_export->institution->organ->head_job);
+    $document->setValue('organ_head_name', $indi_export->institution->organ->head_name);
+
     $document->cloneRow('product_type_name', count($indi_exported_products));
     for ($i=0;$i<count($indi_exported_products);$i++)
     {

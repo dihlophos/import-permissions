@@ -11,7 +11,7 @@ try{
     $document->setValue('exports_permission_num', empty($export->permission_num)?'':$export->institution->region->index.'-'.$export->institution->index.'-'.$export->permission_num);
     $document->setValue('exports_request_date', date_format(date_create($export->request_date),'d.m.Y'));
     $document->setValue('exports_request_num', $export->request_num);
-    $document->setValue('institution_name', 'Главное управление "Государственная инспекция по ветеринарии" Тверской области');
+    $document->setValue('organ_name', $export->institution->organ->name);
     $document->setValue('currdate', date('Y'));
     $document->setValue('organization_name', $export->organization->name);
     $document->setValue('organization_tin', $export->organization->tin);
@@ -22,6 +22,8 @@ try{
     $document->setValue('region_name', $export->region->name);
     $document->setValue('transport_name', $export->transport->name);
     $document->cloneRow('product_type_name', count($exported_products));
+    $document->setValue('organ_head_job', $export->institution->organ->head_job);
+    $document->setValue('organ_head_name', $export->institution->organ->head_name);
     for ($i=0;$i<count($exported_products);$i++)
     {
     	$document->setValue('product_type_name#'.($i+1), $exported_products[$i]->product_type->name);

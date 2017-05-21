@@ -183,7 +183,7 @@ class ExportController extends Controller
     public function permission_doc(Export $export)
     {
         $exported_products = $export->exported_products()->orderBy('id')->get();
-        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport', 'institution');
+        $export->load('organization', 'storage', 'purpose', 'region', 'district', 'transport', 'institution', 'institution.organ');
         $exported_products->load('processed_products', 'product_type');
         return view('exports.permission_doc', [
             'export' => $export,
